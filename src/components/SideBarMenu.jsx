@@ -1,8 +1,13 @@
 import React from "react";
 import { BiHome } from "react-icons/bi";
 import logo from "../assets/logo1.svg";
-import { FaWheelchair } from "react-icons/fa6";
-import { MdExplore, MdOutlineAdd, MdOutlineExplore, MdOutlineLeaderboard } from "react-icons/md";
+import { FaMagnifyingGlass, FaWheelchair } from "react-icons/fa6";
+import {
+  MdExplore,
+  MdOutlineAdd,
+  MdOutlineExplore,
+  MdOutlineLeaderboard,
+} from "react-icons/md";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { SlOrganization } from "react-icons/sl";
 
@@ -16,6 +21,11 @@ const SideBarMenu = () => {
         <div className="flex items-center gap-4 cursor-pointer">
           <MdExplore className="text-2xl" />
           <span className="text-md font-semibold">Explore</span>
+        </div>
+
+        <div className="flex items-center gap-4 cursor-pointer">
+          <FaMagnifyingGlass className="text-2xl" />
+          <span className="text-md">Search</span>
         </div>
 
         <div className="flex items-center gap-4 cursor-pointer">
