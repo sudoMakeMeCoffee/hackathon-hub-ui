@@ -9,8 +9,6 @@ import BottomBarMenu from "./components/BottomBarMenu";
 function App() {
   return (
     <Router>
-      <BottomBarMenu />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -18,6 +16,7 @@ function App() {
         {/* Dashboard routes with sidebar */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="create-post"/>
           <Route path="add-user" element={<AddUser />} />
         </Route>
       </Routes>
