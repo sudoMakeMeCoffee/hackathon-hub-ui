@@ -3,7 +3,7 @@ import PostsSection from "../components/PostsSection";
 
 const Home = () => {
   return (
-    <div className="container w-full h-screen bg-primary text-white flex ">
+    <div className="container w-full h-screen bg-primary text-white ">
       <SideBarMenu />
       <PostsSection />
     </div>

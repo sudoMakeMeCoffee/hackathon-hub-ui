@@ -13,7 +13,7 @@ import { SlOrganization } from "react-icons/sl";
 
 const SideBarMenu = () => {
   return (
-    <div className=" border-gray-700 p-10 hidden md:flex flex-col gap-[80px]  h-screen fixed top-0 left-0 z-50">
+    <div className=" border-gray-700 p-10 hidden md:flex flex-col gap-[80px] text-secondary  h-screen fixed top-0 left-0 z-50">
       <img src={logo} alt="Hackathon Hub" className="w-[120px]" />
       {/* <h1>HB</h1> */}
 
