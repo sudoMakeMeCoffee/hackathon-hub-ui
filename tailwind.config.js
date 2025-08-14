@@ -22,7 +22,12 @@ module.exports = {
         },
       },
 
-      
+      fontSize: {
+        sm: ["0.875rem", "1.25rem"],
+        md: ["1rem", "1.5rem"],
+        lg: ["1.125rem", "1.75rem"],
+        xl: ["1.25rem", "1.75rem"],
+      },
     },
   },
 
@@ -33,8 +38,9 @@ module.exports = {
         ".container": {
           minWidth: "100vw",
           minHeight: "100vh",
-          backgroundColor: "#000",
           fontFamily: "Poppins",
+          padding: "1rem",
+          paddingTop: "60px", // Adjust for fixed navbar height
         },
         ".wrapper": {
           maxWidth: "100%",
