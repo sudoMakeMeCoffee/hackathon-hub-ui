@@ -40,7 +40,7 @@ module.exports = {
           minHeight: "100vh",
           fontFamily: "Poppins",
           padding: "1rem",
-          paddingTop: "60px", // Adjust for fixed navbar height
+          // paddingTop: "60px", // Adjust for fixed navbar height
         },
         ".wrapper": {
           maxWidth: "100%",

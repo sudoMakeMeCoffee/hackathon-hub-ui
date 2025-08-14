@@ -3,7 +3,7 @@ import Post from "./Post";
 
 const PostsSection = () => {
   return (
-    <div className="w-full p-4 h-max min-h-screen flex flex-col items-center gap-6">
+    <div className="w-full p-4 h-max min-h-screen flex flex-col items-center">
       <Post
         src={
           "https://thumbs.dreamstime.com/b/sea-water-ocean-wave-surfing-surface-colorful-vibrant-sunset-barrel-shape-124362369.jpg"
