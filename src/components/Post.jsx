@@ -2,7 +2,7 @@ import { BiDotsHorizontal } from "react-icons/bi";
 
 const Post = ({ src }) => {
   return (
-    <div className="flex flex-col gap-3 w-full md:w-[550px]  max-w-[550px]">
+    <div className="flex flex-col gap-3 w-full md:w-[550px] max-w-[550px]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <img
@@ -21,7 +21,7 @@ const Post = ({ src }) => {
         <BiDotsHorizontal className="text-lg cursor-pointer" />
       </div>
 
-      <div className="w-full  border-gray-400 border-[0.1px] rounded-md">
+      <div className="w-full   rounded-md">
         <div>
           <img src={src} alt="" className="w-full rounded-md" />
         </div>
@@ -29,7 +29,10 @@ const Post = ({ src }) => {
 
       <p className="text-sm">
         Get set for a sensational music experience at the iconic Port City
-        Colombo ...{" "}
+        Colombo ... Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Commodi necessitatibus repudiandae maxime minus nihil quasi, provident
+        asperiores aliquam magnam, obcaecati itaque iste, ipsum aliquid
+        temporibus odio! Nam illo doloremque tempora.
         <span className="text-gray-300 text-sm cursor-pointer">more</span>
       </p>
 

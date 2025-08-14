@@ -7,7 +7,7 @@ import { VscOrganization } from "react-icons/vsc";
 
 const SideBarMenu = () => {
   return (
-    <div className="border-r-[0.5px] border-white p-5 hidden md:flex flex-col  gap-10  h-screen">
+    <div className="border-r-[0.1px] border-gray-700 p-5 hidden md:flex flex-col pr-[100px] gap-10  h-screen">
       <img src={logo} alt="Hackathon Hub" className="w-[100px]" />
       {/* <h1>HB</h1> */}
 
