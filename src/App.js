@@ -8,6 +8,7 @@ import BottomBarMenu from "./components/BottomBarMenu";
 import CreatePost from "./components/CreatePost";
 import Posts from "./pages/Posts";
 import Tasks from "./pages/Tasks";
+import Task from "./pages/Task";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="tasks" element={<Tasks/>}/>
+          <Route path="tasks/:taskid" element={<Task/>}/>
           <Route path="users" element={<Users />} />
           <Route path="posts" element={<Posts />} />
         </Route>
