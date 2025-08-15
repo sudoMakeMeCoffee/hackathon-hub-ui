@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { CgClose } from "react-icons/cg";
 
-const AddTaskForm = () => {
+const AddTaskForm = ({setShowAddTaskForm}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [assigneeIds, setAssigneeIds] = useState([]);
@@ -89,7 +90,10 @@ const AddTaskForm = () => {
 
   return (
     <div className="flex flex-col gap-y-4">
-      <h2 className="text-xl font-bold">Create Task</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold">Create Task</h2>
+        <CgClose className="text-2xl cursor-pointer" onClick={() => setShowAddTaskForm(false)}/>
+      </div>
 
       {/* Title */}
       <input
