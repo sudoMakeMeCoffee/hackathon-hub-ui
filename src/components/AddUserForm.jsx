@@ -44,7 +44,7 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
     setErr("");
   }, [password]);
 
-  const signIn = async () => {
+  const addUser = async () => {
     try {
       setIsLoading(true);
       const res = await axios.post(
@@ -80,10 +80,10 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
       return;
     }
 
-    signIn();
+    addUser();
   };
   return (
-    <form className="flex flex-col gap-4 w-full max-w-[400px]">
+    <form className="flex flex-col gap-4 w-full max-w-[400px]" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2">
         <h1 className="text-xl font-medium flex items-center justify-between">
           Add New User
