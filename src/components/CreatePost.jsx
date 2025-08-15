@@ -1,12 +1,13 @@
 import React, { useState, useRef } from "react";
 import { CgClose } from "react-icons/cg";
-import { FaBold, FaImage, FaItalic, FaUnderline } from "react-icons/fa6";
+import { FaBold, FaItalic, FaUnderline } from "react-icons/fa6";
 import { IoImageOutline } from "react-icons/io5";
 
 const CreatePost = () => {
   const [text, setText] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
   const textareaRef = useRef();
   const fileInputRef = useRef();
 
@@ -30,7 +31,6 @@ const CreatePost = () => {
     fileInputRef.current.value = null;
   };
 
-  // Apply formatting at cursor
   const applyFormat = (format) => {
     const cursor = textareaRef.current.selectionStart;
     let newText;
@@ -50,23 +50,50 @@ const CreatePost = () => {
     setText(newText);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Text:", text);
-    console.log("Image:", image);
-    // send to backend
+    if (!text && !image) return alert("Please add a caption or image.");
+
+    const formData = new FormData();
+    formData.append("caption", text);
+    if (image) formData.append("image", image);
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/post/create", {
+        method: "POST",
+        body: formData,
+        credentials: "include", // if using session/auth
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert("Post created successfully!");
+        setText("");
+        removeImage();
+      } else {
+        alert("Failed to create post: " + data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error creating post.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow overflow-hidden p- rounded-lg">
+    <div className="max-w-4xl mx-auto bg-white shadow overflow-hidden p-4 rounded-lg">
       <div className="flex items-center justify-between border-b-[0.5px] border-gray-300 p-4 pb-4 mb-4">
         <CgClose className="cursor-pointer text-lg" />
         <span>Create post</span>
         <button
           onClick={handleSubmit}
           className="font-semibold"
+          disabled={loading}
         >
-          Post
+          {loading ? "Posting..." : "Post"}
         </button>
       </div>
 
@@ -77,21 +104,21 @@ const CreatePost = () => {
           className="px-2 py-2 border-[0.5px] border-gray-500 text-primary rounded hover:opacity-80"
           onClick={() => applyFormat("bold")}
         >
-          <FaBold/>
+          <FaBold />
         </button>
         <button
           type="button"
           className="px-2 py-2 border-[0.5px] border-gray-500 text-primary rounded hover:opacity-80"
           onClick={() => applyFormat("italic")}
         >
-          <FaItalic/>
+          <FaItalic />
         </button>
         <button
           type="button"
-         className="px-2 py-2 border-[0.5px] border-gray-500 text-primary rounded hover:opacity-80"
+          className="px-2 py-2 border-[0.5px] border-gray-500 text-primary rounded hover:opacity-80"
           onClick={() => applyFormat("underline")}
         >
-          <FaUnderline/>
+          <FaUnderline />
         </button>
       </div>
 
@@ -107,7 +134,7 @@ const CreatePost = () => {
         />
       </div>
 
-      {/* Image Preview Section */}
+      {/* Image Section */}
       {preview ? (
         <div className="relative w-full h-64 bg-gray-100 rounded overflow-hidden p-4">
           <img
@@ -123,18 +150,17 @@ const CreatePost = () => {
           </button>
         </div>
       ) : (
-        <div className=" px-4">
-        <button
-          type="button"
-          className=""
-          onClick={() => fileInputRef.current.click()}
-        >
-          <IoImageOutline className="text-2xl" />
-        </button>
+        <div className="px-4">
+          <button
+            type="button"
+            className=""
+            onClick={() => fileInputRef.current.click()}
+          >
+            <IoImageOutline className="text-2xl" />
+          </button>
         </div>
       )}
 
-      {/* Hidden File Input */}
       <input
         type="file"
         accept="image/*"
