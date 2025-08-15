@@ -51,8 +51,9 @@ const TaskList = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-4">
-      <h2 className="text-2xl font-bold">Tasks</h2>
+    <div className="flex flex-col gap-y-4">
+      <h2 className="text-xl font-bold">All Tasks</h2>
+
       {tasks?.map((task) => {
         const allSubtasksCompleted =
           task.subTasks?.length > 0 &&
@@ -83,7 +84,7 @@ const TaskList = () => {
                   task.completed ? "bg-green-500 text-white" : "bg-gray-200"
                 }`}
               >
-                {task.completed ?  <TiTick/> : <MdOutlineWatchLater/>}
+                {task.completed ? <TiTick /> : <MdOutlineWatchLater />}
               </button>
             </div>
             <p className="text-sm text-gray-600">{task.description}</p>
@@ -121,9 +122,8 @@ const TaskList = () => {
                       </p> */}
                       <button
                         onClick={() => toggleTaskStatus(sub.id, true, task.id)}
-                        
                       >
-                        {task.completed ?  <TiTick/> : <MdOutlineWatchLater/>}
+                        {task.completed ? <TiTick /> : <MdOutlineWatchLater />}
                       </button>
                     </div>
                   </div>
