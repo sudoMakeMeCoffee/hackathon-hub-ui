@@ -95,9 +95,9 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow overflow-hidden p-4 rounded-lg">
+    <div className="md:max-w-4xl mx-auto bg-white md:shadow overflow-hidden md:p-4 md:rounded-lg">
       {/* Header */}
-      <div className="flex items-center justify-between border-b-[0.5px] border-gray-300 p-4 pb-4 mb-4">
+      <div className="flex items-center justify-between border-b-[0.5px] border-gray-300 p-4 mb-4">
         <CgClose className="cursor-pointer text-lg" />
         <span className="font-semibold">Create Post</span>
         <button
@@ -110,7 +110,7 @@ const CreatePost = () => {
       </div>
 
       {/* Formatting Toolbar */}
-      <div className="flex gap-2 px-4 mb-2">
+      {/* <div className="flex gap-2 px-4 mb-4">
         <button
           type="button"
           className="px-2 py-2 border-[0.5px] border-gray-500 text-primary rounded hover:opacity-80"
@@ -132,15 +132,15 @@ const CreatePost = () => {
         >
           <FaUnderline />
         </button>
-      </div>
+      </div> */}
 
       {/* Caption */}
       <div className="flex flex-col gap-4 mb-4 px-4">
         <textarea
           ref={textareaRef}
-          className="w-full focus:outline-none bg-transparent resize-none"
+          className="w-full focus:outline-none bg-transparent resize-none text-sm"
           rows={5}
-          placeholder="Write a caption..."
+          placeholder="Write something....."
           value={text}
           onChange={handleTextChange}
         />
@@ -148,7 +148,7 @@ const CreatePost = () => {
 
       {/* Image Preview */}
       {preview ? (
-        <div className="relative w-full h-64 bg-gray-100 rounded overflow-hidden p-4">
+        <div className="relative w-full h-64 bg-gray-100 md:rounded overflow-hidden p-4">
           <img
             src={preview}
             alt="Preview"

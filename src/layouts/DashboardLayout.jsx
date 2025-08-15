@@ -9,7 +9,7 @@ const DashboardLayout = () => {
       <DashboardNav />
 
       {/* Main content */}
-      <div className="md:ml-[70px] flex-1 bg-secondary min-h-screen p-4">
+      <div className="md:ml-[70px] flex-1 bg-secondary min-h-screen md:p-4">
         <Outlet />
       </div>
     </div>
