@@ -152,6 +152,7 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
           id=""
           className="input-field input-md"
           disabled={isLoading}
+          onChange={(e) => setRole(e.target.value)}
         >
           <option value="" disabled selected>
             Select Role

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { TbTrash } from "react-icons/tb";
 import AddUserForm from "./AddUserForm";
+import axios from "axios";
 
-const UsersList = ({showAddUserForm, setShowAddUserForm}) => {
+const UsersList = ({ showAddUserForm, setShowAddUserForm }) => {
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
+  const [users, setUsers] = useState([]);
   const [contextMenu, setContextMenu] = useState({
     visible: false,
     x: 0,
@@ -13,17 +15,30 @@ const UsersList = ({showAddUserForm, setShowAddUserForm}) => {
     user: null,
   });
 
-  const users = [
-    { id: 1, name: "John Doe", email: "john@example.com", role: "ADMIN" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "EDITOR" },
-    { id: 3, name: "Mike Johnson", email: "mike@example.com", role: "ADMIN" },
-    { id: 4, name: "Sara Lee", email: "sara@example.com", role: "EDITOR" },
-  ];
+  const getAllUsers = () => {
+    axios
+      .get("http://localhost:8080/api/v1/user", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("Users fetched successfully:", res.data);
+        setUsers(res.data.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching users:", err);
+      });
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  } ,[])
+
+  
 
   // Filtered list
   const filteredUsers = users.filter(
     (user) =>
-      (user.name.toLowerCase().includes(search.toLowerCase()) ||
+      (user.username.toLowerCase().includes(search.toLowerCase()) ||
         user.email.toLowerCase().includes(search.toLowerCase())) &&
       (roleFilter === "" || user.role === roleFilter)
   );
@@ -46,8 +61,6 @@ const UsersList = ({showAddUserForm, setShowAddUserForm}) => {
 
   return (
     <div className="p-4" onClick={closeContextMenu}>
-      
-
       {/* Top Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-xl font-bold text-primary">Users</h2>
@@ -97,7 +110,7 @@ const UsersList = ({showAddUserForm, setShowAddUserForm}) => {
                 onContextMenu={(e) => handleRightClick(e, user)}
                 className="border-t border-gray-300 hover:bg-primary/10 cursor-pointer"
               >
-                <td className="px-4 py-2">{user.name}</td>
+                <td className="px-4 py-2">{user.username}</td>
                 <td className="px-4 py-2">{user.email}</td>
                 <td className="px-4 py-2">{user.role}</td>
               </tr>
@@ -115,7 +128,7 @@ const UsersList = ({showAddUserForm, setShowAddUserForm}) => {
             className="bg-secondary text-white rounded-lg p-4 shadow cursor-pointer flex items-center justify-between"
           >
             <div>
-              <p className="font-semibold text-primary">{user.name} </p>
+              <p className="font-semibold text-primary">{user.username} </p>
               <span
                 className={
                   user.role == "ADMIN"
