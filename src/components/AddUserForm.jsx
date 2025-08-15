@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { isValidEmail } from "../utils/utils";
+import { isValidEmail } from "../utils/utils";
 import { CiWarning } from "react-icons/ci";
 import { CgClose } from "react-icons/cg";
+import useAuthStore from "../store/AuthStore";
 
 const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
-  //   const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
+  const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
 
-  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,70 +22,66 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  //   const checkEmail = async () => {
-  //     setErrors((prev) => ({
-  //       ...prev,
-  //       email: !isValidEmail(email) ? "Enter a valid email" : "",
-  //     }));
-  //   };
+  const checkEmail = async () => {
+    setErrors((prev) => ({
+      ...prev,
+      email: !isValidEmail(email) ? "Enter a valid email" : "",
+    }));
+  };
 
-  //   useEffect(() => {
-  //     setErr("");
-  //     const timeout = setTimeout(() => {
-  //       if (email) {
-  //         checkEmail();
-  //       }
-  //     }, 500);
+  useEffect(() => {
+    setErr("");
+    const timeout = setTimeout(() => {
+      if (email) {
+        checkEmail();
+      }
+    }, 500);
 
-  //     return () => clearTimeout(timeout);
-  //   }, [email]);
+    return () => clearTimeout(timeout);
+  }, [email]);
 
-  //   useEffect(() => {
-  //     setErr("");
-  //   }, [password]);
+  useEffect(() => {
+    setErr("");
+  }, [password]);
 
-  //   const signIn = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const res = await axios.post(
-  //         "http://localhost:8080/api/v1/auth/signin",
-  //         {
-  //           email: email,
-  //           password: password,
-  //         },
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       setIsLoading(false);
-  //       setIsAuthenticated(true);
-  //       setUser(res.data.data);
-  //       navigate("/");
-  //     } catch (error) {
-  //       if (error.response?.data?.error == "ACCOUNT-NOT-VERIFIED") {
-  //         toast.info("Verify your email to login");
-  //         navigate(`/verify-email?q=${email}`);
-  //       }
-  //       setErr(error.response?.data?.message);
-  //       console.log(error);
-  //       setIsLoading(false);
-  //     }
-  //   };
+  const signIn = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.post(
+        "http://localhost:8080/api/v1/auth/add-user",
+        {
+          username: fullName,
+          email: email,
+          password: password,
+          role: role,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setIsLoading(false);
+      setShowAddUserForm(false)
+    } catch (error) {
+      setErr(error.response?.data?.message);
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
 
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     setErr("");
-  //     checkEmail();
-  //     if (password.length < 1) {
-  //       setErrors((prev) => ({
-  //         ...prev,
-  //         password: "Password is required",
-  //       }));
-  //       return;
-  //     }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErr("");
+    checkEmail();
+    if (password.length < 1) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Password is required",
+      }));
+      return;
+    }
 
-  //     signIn();
-  //   };
+    signIn();
+  };
   return (
     <form className="flex flex-col gap-4 w-full max-w-[400px]">
       <div className="flex flex-col gap-2">
