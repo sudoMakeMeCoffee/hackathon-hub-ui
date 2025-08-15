@@ -5,6 +5,8 @@ import Users from "./pages/Users";
 import Dashboard from "./pages/Dashboard";
 import DashboardLayout from "./layouts/DashboardLayout";
 import BottomBarMenu from "./components/BottomBarMenu";
+import CreatePost from "./components/CreatePost";
+import Posts from "./pages/Posts";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="create-post"/>
           <Route path="users" element={<Users />} />
+          <Route path="posts" element={<Posts />} />
         </Route>
       </Routes>
     </Router>
