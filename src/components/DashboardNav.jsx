@@ -10,7 +10,7 @@ const DashboardNav = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="fixed md:top-0 bottom-0 left-0 right-0 w-full md:w-[70px] p-4 h-[70px] md:h-screen z-50 bg-primary text-secondary  md:flex flex-row md:flex-col items-center justify-between gap-10">
+    <div className="fixed md:top-0 bottom-0 left-0 right-0 w-full md:w-[70px] p-4 h-[70px] md:h-screen z-100 bg-primary text-secondary  md:flex flex-row md:flex-col items-center justify-between gap-10">
       <div>{/* Logo */}</div>
 
       <div className="flex md:flex-col items-center gap-10 justify-evenly md:justify-normal">

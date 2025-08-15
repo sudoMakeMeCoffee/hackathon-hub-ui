@@ -26,8 +26,10 @@ const Tasks = () => {
     <div className="flex flex-col  w-full gap-4 p-4 md:p-0">
       <TaskList tasks={tasks} setShowAddTaskForm={setShowAddTaskForm} />
       {showAddTaskForm && (
-        <div className="fixed inset-0  bg-secondary flex items-center justify-center z-50">
-          <AddTaskForm setShowAddTaskForm={setShowAddTaskForm} />
+        <div className="fixed inset-0 bg-secondary flex items-center justify-center z-40">
+          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto p-4">
+            <AddTaskForm setShowAddTaskForm={setShowAddTaskForm} />
+          </div>
         </div>
       )}
     </div>
