@@ -35,7 +35,7 @@ const DashboardNav = () => {
         <Link to="/dashboard/posts">
           <CgAddR
             className={`text-2xl cursor-pointer transition-all ${
-              isActive("/dashboard/add") ? "font-bold scale-110" : "opacity-70"
+              isActive("/dashboard/posts") ? "font-bold scale-110" : "opacity-70"
             }`}
           />
         </Link>

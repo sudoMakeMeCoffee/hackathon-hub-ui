@@ -148,12 +148,8 @@ const CreatePost = () => {
 
       {/* Image Preview */}
       {preview ? (
-        <div className="relative w-full h-64 bg-gray-100 md:rounded overflow-hidden p-4">
-          <img
-            src={preview}
-            alt="Preview"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          />
+        <div className="relative w-full md:rounded overflow-hidden mb-4">
+          <img src={preview} alt="Preview" className="w-full h-auto rounded" />
           <button
             onClick={removeImage}
             className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full hover:bg-black"
@@ -172,7 +168,7 @@ const CreatePost = () => {
           </button>
         </div>
       )}
-
+      
       {/* Hidden File Input */}
       <input
         type="file"

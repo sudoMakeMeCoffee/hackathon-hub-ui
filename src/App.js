@@ -7,6 +7,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import BottomBarMenu from "./components/BottomBarMenu";
 import CreatePost from "./components/CreatePost";
 import Posts from "./pages/Posts";
+import Tasks from "./pages/Tasks";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         {/* Dashboard routes with sidebar */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path="create-post"/>
+          <Route path="tasks" element={<Tasks/>}/>
           <Route path="users" element={<Users />} />
           <Route path="posts" element={<Posts />} />
         </Route>
