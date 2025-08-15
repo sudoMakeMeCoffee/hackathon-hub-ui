@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import axios from "axios";
 import { CgClose } from "react-icons/cg";
 import { FaBold, FaItalic, FaUnderline } from "react-icons/fa6";
 import { IoImageOutline } from "react-icons/io5";
@@ -8,15 +9,18 @@ const CreatePost = () => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const textareaRef = useRef();
   const fileInputRef = useRef();
 
+  // Handle text change and auto-resize
   const handleTextChange = (e) => {
     setText(e.target.value);
     textareaRef.current.style.height = "auto";
     textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
   };
 
+  // Handle image selection
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -25,12 +29,14 @@ const CreatePost = () => {
     }
   };
 
+  // Remove image
   const removeImage = () => {
     setImage(null);
     setPreview(null);
     fileInputRef.current.value = null;
   };
 
+  // Apply formatting at cursor
   const applyFormat = (format) => {
     const cursor = textareaRef.current.selectionStart;
     let newText;
@@ -50,6 +56,7 @@ const CreatePost = () => {
     setText(newText);
   };
 
+  // Submit post to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!text && !image) return alert("Please add a caption or image.");
@@ -61,19 +68,23 @@ const CreatePost = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/api/v1/post/create", {
-        method: "POST",
-        body: formData,
-        credentials: "include", // if using session/auth
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/post/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true, // include cookies if using session/auth
+        }
+      );
 
-      const data = await response.json();
-      if (data.success) {
+      if (response.data.success) {
         alert("Post created successfully!");
         setText("");
         removeImage();
       } else {
-        alert("Failed to create post: " + data.message);
+        alert("Failed to create post: " + response.data.message);
       }
     } catch (err) {
       console.error(err);
@@ -85,12 +96,13 @@ const CreatePost = () => {
 
   return (
     <div className="max-w-4xl mx-auto bg-white shadow overflow-hidden p-4 rounded-lg">
+      {/* Header */}
       <div className="flex items-center justify-between border-b-[0.5px] border-gray-300 p-4 pb-4 mb-4">
         <CgClose className="cursor-pointer text-lg" />
-        <span>Create post</span>
+        <span className="font-semibold">Create Post</span>
         <button
           onClick={handleSubmit}
-          className="font-semibold"
+          className="font-semibold text-primary"
           disabled={loading}
         >
           {loading ? "Posting..." : "Post"}
@@ -122,7 +134,7 @@ const CreatePost = () => {
         </button>
       </div>
 
-      {/* Caption Section */}
+      {/* Caption */}
       <div className="flex flex-col gap-4 mb-4 px-4">
         <textarea
           ref={textareaRef}
@@ -134,7 +146,7 @@ const CreatePost = () => {
         />
       </div>
 
-      {/* Image Section */}
+      {/* Image Preview */}
       {preview ? (
         <div className="relative w-full h-64 bg-gray-100 rounded overflow-hidden p-4">
           <img
@@ -150,17 +162,18 @@ const CreatePost = () => {
           </button>
         </div>
       ) : (
-        <div className="px-4">
+        <div className="px-4 mb-4">
           <button
             type="button"
-            className=""
+            className="text-2xl text-primary"
             onClick={() => fileInputRef.current.click()}
           >
-            <IoImageOutline className="text-2xl" />
+            <IoImageOutline />
           </button>
         </div>
       )}
 
+      {/* Hidden File Input */}
       <input
         type="file"
         accept="image/*"
