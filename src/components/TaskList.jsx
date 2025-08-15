@@ -3,6 +3,7 @@ import axios from "axios";
 import { TiTick } from "react-icons/ti";
 import { FiWatch } from "react-icons/fi";
 import { MdOutlineWatchLater } from "react-icons/md";
+import TaskCard from "./TaskCard";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -51,88 +52,11 @@ const TaskList = () => {
   };
 
   return (
-    <div className="flex flex-col gap-y-4">
-      <h2 className="text-xl font-bold">All Tasks</h2>
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {tasks.map((task) => (
+            <TaskCard task = {task}/>
+        ))}
 
-      {tasks?.map((task) => {
-        const allSubtasksCompleted =
-          task.subTasks?.length > 0 &&
-          task.subTasks.every((sub) => sub.completed);
-
-        return (
-          <div
-            key={task.id}
-            className="border rounded-lg p-4 bg-white shadow space-y-3"
-          >
-            {/* Main Task */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {allSubtasksCompleted && (
-                  <span className="text-green-500 text-lg">✔</span>
-                )}
-                <h3
-                  className={`text-lg font-medium ${
-                    task.completed ? "line-through text-gray-500" : ""
-                  }`}
-                >
-                  {task.title}
-                </h3>
-              </div>
-              <button
-                onClick={() => toggleTaskStatus(task.id)}
-                className={`px-3 py-1 rounded ${
-                  task.completed ? "bg-green-500 text-white" : "bg-gray-200"
-                }`}
-              >
-                {task.completed ? <TiTick /> : <MdOutlineWatchLater />}
-              </button>
-            </div>
-            <p className="text-sm text-gray-600">{task.description}</p>
-            <p className="text-xs text-gray-500">
-              Assignees:{" "}
-              {task.taskAssignees?.map((u) => u.username).join(", ") || "None"}
-            </p>
-
-            {/* Subtasks */}
-            {task.subTasks?.length > 0 && (
-              <div className="pl-4 border-l space-y-2">
-                {task.subTasks.map((sub) => (
-                  <div
-                    key={sub.id}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-2">
-                      {sub.completed && (
-                        <span className="text-green-500 text-lg">✔</span>
-                      )}
-                      <p
-                        className={`${
-                          sub.completed ? "line-through text-gray-500" : ""
-                        }`}
-                      >
-                        {sub.title}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {/* <p className="text-xs text-gray-500">
-                        Assignees:{" "}
-                        {sub.subTaskAssignees
-                          ?.map((u) => u.username)
-                          .join(", ") || "None"}
-                      </p> */}
-                      <button
-                        onClick={() => toggleTaskStatus(sub.id, true, task.id)}
-                      >
-                        {task.completed ? <TiTick /> : <MdOutlineWatchLater />}
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      })}
     </div>
   );
 };
