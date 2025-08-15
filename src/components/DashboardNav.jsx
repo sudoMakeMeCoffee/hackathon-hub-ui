@@ -40,10 +40,10 @@ const DashboardNav = () => {
           />
         </Link>
 
-        <Link to="/dashboard/add-user">
+        <Link to="/dashboard/users">
           <RiUserAddLine
             className={`text-2xl cursor-pointer transition-all ${
-              isActive("/dashboard/add-user")
+              isActive("/dashboard/users")
                 ? "font-bold scale-110"
                 : "opacity-70"
             }`}

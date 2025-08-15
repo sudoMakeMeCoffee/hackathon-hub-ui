@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import { isValidEmail } from "../utils/utils";
 import { CiWarning } from "react-icons/ci";
+import { CgClose } from "react-icons/cg";
 
-const AddUserForm = () => {
+const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
   //   const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
 
   const navigate = useNavigate();
@@ -88,10 +89,14 @@ const AddUserForm = () => {
   return (
     <form className="flex flex-col gap-4 w-full max-w-[400px]">
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-medium">
+        <h1 className="text-xl font-medium flex items-center justify-between">
+          Add New User
+          <CgClose
+            className="text-primary cursor-pointer"
+            onClick={() => setShowAddUserForm(false)}
+          />
         </h1>
-        <span className="font-light text-sm">
-        </span>
+        <span className="font-light text-sm"></span>
         {err && (
           <>
             <br />
@@ -113,7 +118,9 @@ const AddUserForm = () => {
           value={fullName}
           disabled={isLoading}
         />
-        <span className="text-sm font-light text-red-500">{errors.fullName}</span>
+        <span className="text-sm font-light text-red-500">
+          {errors.fullName}
+        </span>
       </div>
       <div className="flex flex-col gap-1">
         <input
@@ -144,23 +151,34 @@ const AddUserForm = () => {
       </div>
 
       <div className="flex flex-col gap-1">
-        <select name="role" id="" className="input-field input-md" disabled={isLoading}>
-            <option value="" disabled selected>Select Role</option>
-            <option value="ADMIN">Admin</option>
-            <option value="EDITOR">Editor</option>
+        <select
+          name="role"
+          id=""
+          className="input-field input-md"
+          disabled={isLoading}
+        >
+          <option value="" disabled selected>
+            Select Role
+          </option>
+          <option value="ADMIN">Admin</option>
+          <option value="EDITOR">Editor</option>
         </select>
-        <span className="text-sm font-light text-red-500">
-          {errors.role}
-        </span>
+        <span className="text-sm font-light text-red-500">{errors.role}</span>
       </div>
-
-      
 
       <button type="submit" className="btn-primary btn-md" disabled={isLoading}>
         Add
         {isLoading && (
           <div className=" ml-1 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
         )}
+      </button>
+      <button
+        type="button"
+        className="btn-secondary btn-md"
+        disabled={isLoading}
+        onClick={() => setShowAddUserForm(false)}
+      >
+        Cancel
       </button>
     </form>
   );

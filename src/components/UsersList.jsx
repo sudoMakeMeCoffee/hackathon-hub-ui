@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { TbTrash } from "react-icons/tb";
+import AddUserForm from "./AddUserForm";
 
-const UsersList = () => {
+const UsersList = ({showAddUserForm, setShowAddUserForm}) => {
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
   const [contextMenu, setContextMenu] = useState({
@@ -45,10 +46,15 @@ const UsersList = () => {
 
   return (
     <div className="p-4" onClick={closeContextMenu}>
+      
+
       {/* Top Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-xl font-bold text-primary">Users</h2>
-        <button className="bg-primary text-secondary px-4 py-2 rounded hover:opacity-80">
+        <button
+          className="bg-primary text-secondary px-4 py-2 rounded hover:opacity-80"
+          onClick={() => setShowAddUserForm(true)}
+        >
           + Add New User
         </button>
       </div>
