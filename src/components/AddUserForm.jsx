@@ -8,12 +8,16 @@ const AddUserForm = () => {
   //   const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
 
   const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [err, setErr] = useState("");
   const [errors, setErrors] = useState({
+    fullName: "",
     email: "",
     password: "",
+    role: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -85,10 +89,8 @@ const AddUserForm = () => {
     <form className="flex flex-col gap-4 w-full max-w-[400px]">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-medium">
-          Welcome ! <br />
         </h1>
         <span className="font-light text-sm">
-          Login to Hackathon Hub Platform
         </span>
         {err && (
           <>
@@ -100,6 +102,18 @@ const AddUserForm = () => {
             </div>
           </>
         )}
+      </div>
+      <div className="flex flex-col gap-1">
+        <input
+          type="text"
+          placeholder="Full Name"
+          name="fullName"
+          className="input-field input-md"
+          onChange={(e) => setFullName(e.target.value)}
+          value={fullName}
+          disabled={isLoading}
+        />
+        <span className="text-sm font-light text-red-500">{errors.fullName}</span>
       </div>
       <div className="flex flex-col gap-1">
         <input
@@ -129,8 +143,21 @@ const AddUserForm = () => {
         </span>
       </div>
 
+      <div className="flex flex-col gap-1">
+        <select name="role" id="" className="input-field input-md" disabled={isLoading}>
+            <option value="" disabled selected>Select Role</option>
+            <option value="ADMIN">Admin</option>
+            <option value="EDITOR">Editor</option>
+        </select>
+        <span className="text-sm font-light text-red-500">
+          {errors.role}
+        </span>
+      </div>
+
+      
+
       <button type="submit" className="btn-primary btn-md" disabled={isLoading}>
-        Log In
+        Add
         {isLoading && (
           <div className=" ml-1 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
         )}

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import AddUser from "./pages/AddUser";
+import Users from "./pages/Users";
 import Dashboard from "./pages/Dashboard";
 import DashboardLayout from "./layouts/DashboardLayout";
 import BottomBarMenu from "./components/BottomBarMenu";
@@ -17,7 +17,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="create-post"/>
-          <Route path="add-user" element={<AddUser />} />
+          <Route path="users" element={<Users />} />
         </Route>
       </Routes>
     </Router>

@@ -10,7 +10,7 @@ const DashboardNav = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="fixed top-0 bottom-0 left-0 w-[70px] p-4 h-screen z-50 bg-primary text-secondary flex flex-col items-center justify-between gap-10">
+    <div className="fixed top-0 bottom-0 left-0 w-[70px] p-4 h-screen z-50 bg-primary text-secondary hidden md:flex flex-col items-center justify-between gap-10">
       <div>{/* Logo */}</div>
 
       <div className="flex flex-col items-center gap-10">
