@@ -1,8 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { CgAddR } from "react-icons/cg";
 import { MdAddTask, MdLogout, MdOutlineDashboard } from "react-icons/md";
-import { RiUserAddLine } from "react-icons/ri";
+import { RiProfileLine, RiUserAddLine } from "react-icons/ri";
 import axios from "axios";
+import { ImProfile } from "react-icons/im";
 
 const DashboardNav = () => {
   const location = useLocation();
@@ -62,6 +63,16 @@ const DashboardNav = () => {
           <RiUserAddLine
             className={`text-2xl cursor-pointer transition-all ${
               isActive("/dashboard/users")
+                ? "font-bold scale-110"
+                : "opacity-70"
+            }`}
+          />
+        </Link>
+
+        <Link to="/dashboard/profile">
+          <ImProfile
+            className={`text-2xl cursor-pointer transition-all ${
+              isActive("/dashboard/profile")
                 ? "font-bold scale-110"
                 : "opacity-70"
             }`}

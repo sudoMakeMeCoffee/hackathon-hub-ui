@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import axios from "axios";
 import useAuthStore from "./store/AuthStore";
 import { useEffect } from "react";
+import Profile from "./pages/Profile";
 
 function App() {
     const { isAuthenticated, setIsAuthenticated, user, setUser, setAuthLoading } = useAuthStore();
@@ -49,6 +50,7 @@ function App() {
             <Route path="tasks/:taskid" element={<Task />} />
             <Route path="users" element={<Users />} />
             <Route path="posts" element={<Posts />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Route>
       </Routes>
