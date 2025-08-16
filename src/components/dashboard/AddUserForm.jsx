@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { isValidEmail } from "../utils/utils";
+import { isValidEmail } from "../../utils/utils";
 import { CiWarning } from "react-icons/ci";
 import { CgClose } from "react-icons/cg";
-import useAuthStore from "../store/AuthStore";
-import api from "../api/axios";
+import useAuthStore from "../../store/AuthStore";
+import api from "../../api/axios";
+import Loader from "../Loader";
+import { BeatLoader, ClipLoader } from "react-spinners";
 
 const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
   const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
@@ -206,10 +208,15 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
         <span className="text-sm font-light text-red-500">{errors.role}</span>
       </div>
 
-      <button type="submit" className="btn-primary btn-md" disabled={isLoading}>
-        Add
-        {isLoading && (
-          <div className=" ml-1 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+      <button
+        type="submit"
+        className="text-sm bg-primary text-secondary px-3 py-2 rounded-md font-semibold"
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <BeatLoader color={"#ffffff"} loading={isLoading} size={3} />
+        ) : (
+          "Add User"
         )}
       </button>
     </form>

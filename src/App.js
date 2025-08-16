@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import Profile from "./pages/Profile";
 import api from "./api/axios";
 import AddUser from "./pages/dashboard/AddUser";
+import Loader from "./components/Loader";
 
 function App() {
     const { isAuthenticated, setIsAuthenticated, user, setUser, setAuthLoading } = useAuthStore();

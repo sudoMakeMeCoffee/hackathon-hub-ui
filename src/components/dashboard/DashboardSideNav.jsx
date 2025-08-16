@@ -10,7 +10,7 @@ const DashboardSideNav = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="fixed top-[70px] min-w-[250px] left-0 h-screen bg-secondary shadow-sm border-r border-gray-200  z-1000 hidden md:block">
+    <div className="fixed top-[70px] min-w-[250px] left-0 h-screen bg-secondary shadow-sm border-r border-gray-200  z-40 hidden md:block">
       <div className="p-3 flex flex-col gap-3">
         <Link
           className={`flex items-center w-full hover:bg-gray-200 p-3 gap-3 rounded-md text-sm transition-all ${
@@ -34,7 +34,7 @@ const DashboardSideNav = () => {
 
          <Link
           className={`flex items-center w-full hover:bg-gray-200 p-3 gap-3 rounded-md text-sm transition-all ${
-            isActive("/dashboard/users") ? "font-semibold scale-102 bg-gray-200" : "opacity-70"
+            isActive("/dashboard/users") ||  isActive("/dashboard/users/add") ? "font-semibold scale-102 bg-gray-200" : "opacity-70"
           }`}
           to="/dashboard/users"
         >

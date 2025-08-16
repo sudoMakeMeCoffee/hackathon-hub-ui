@@ -3,7 +3,7 @@ import logo from "../../assets/logo-dark.png";
 
 const DashboardTopBar = () => {
   return (
-    <div className="fixed top-0 left-0 right-0 bg-secondary w-full h-[70px] flex items-center border-b shadow-sm border-gray-200 z-1000">
+    <div className="fixed top-0 left-0 right-0 bg-secondary w-full h-[70px] flex items-center border-b shadow-sm border-gray-200 z-40">
       <div className="wrapper w-full flex items-center justify-between">
         <img src={logo} alt="" className="w-[110px] " />
 

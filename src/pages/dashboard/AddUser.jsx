@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { PiPlus } from "react-icons/pi";
 import { FaPlus } from "react-icons/fa6";
-import AddUserForm from "../../components/AddUserForm";
+import AddUserForm from "../../components/dashboard/AddUserForm";
 
 const AddUser = () => {
   const [users, setUsers] = useState([]);
@@ -47,7 +47,7 @@ const AddUser = () => {
         </button> */}
       </div>
 
-      <AddUserForm/>
+      <AddUserForm />
     </div>
   );
 };

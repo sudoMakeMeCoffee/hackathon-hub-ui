@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { PiPlus } from "react-icons/pi";
 import { FaPlus } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -40,10 +41,13 @@ const Users = () => {
     <div className="w-full min-h-screen wrapper">
       <div className="flex items-center justify-between ">
         {/* <h1 className="text-xl font-bold">User Management</h1> */}
-        <button className="text-sm bg-primary text-secondary px-3 py-2 rounded-md font-semibold flex items-center gap-1 hover:opacity-80 transition-all">
+        <Link
+          to={"add"}
+          className="text-sm bg-primary text-secondary px-3 py-2 rounded-md font-semibold flex items-center gap-1 hover:opacity-80 transition-all"
+        >
           <FaPlus className="" />
           Add User
-        </button>
+        </Link>
       </div>
 
       <div className=" mt-8">
