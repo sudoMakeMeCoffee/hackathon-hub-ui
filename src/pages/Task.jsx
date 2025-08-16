@@ -6,13 +6,17 @@ const Task = () => {
   const { taskid } = useParams();
   const [task, setTask] = useState(null);
 
-  useEffect(() => {
+  const fetchTask = () => {
     axios
       .get(`http://localhost:8080/api/v1/task/${taskid}`, {
         withCredentials: true,
       })
       .then((res) => setTask(res.data.data))
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchTask();
   }, [taskid]);
 
   if (!task) {
@@ -23,6 +27,22 @@ const Task = () => {
     );
   }
 
+  const completeSubtask = (taskId, subtaskId) => {
+    
+    axios
+      .put(
+        `http://localhost:8080/api/v1/task/${taskId}/subtasks/${subtaskId}/complete`,
+        {},
+        { withCredentials: true }
+      )
+      .then(() => {
+        fetchTask();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
       {/* Main Task */}
@@ -31,10 +51,12 @@ const Task = () => {
           <h1 className="text-2xl font-bold">{task.title}</h1>
           <span
             className={`px-3 py-1 rounded-full text-sm ${
-              task.completed ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
+              task.completed
+                ? "bg-green-100 text-green-700"
+                : "bg-yellow-100 text-yellow-700"
             }`}
           >
-            {task.completed ? "Completed" : "In Progress"}
+            {/* {task.completed ? "Completed" : "In Progress"} */}
           </span>
         </div>
         {task.description && (
@@ -72,19 +94,35 @@ const Task = () => {
             className="bg-gray-50 rounded-xl p-4 shadow-sm hover:shadow-md transition"
           >
             <div className="flex justify-between items-center">
-              <p className={`font-medium ${subtask.completed ? "line-through text-gray-500" : ""}`}>
+              <p
+                className={`font-medium ${
+                  subtask.completed ? "line-through text-gray-500" : ""
+                }`}
+              >
                 {subtask.title}
               </p>
               <span
                 className={`px-3 py-1 rounded-full text-sm ${
-                  subtask.completed ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"
+                  subtask.completed
+                    ? "bg-green-100 text-green-700"
+                    : "bg-yellow-100 text-yellow-700"
                 }`}
               >
                 {subtask.completed ? "Done" : "Pending"}
               </span>
+              {!subtask.completed && (
+                <button
+                  className="text-sm btn-primary btn-md"
+                  onClick={() => completeSubtask(task.id, subtask.id)}
+                >
+                  Mark as completed
+                </button>
+              )}
             </div>
             {subtask.description && (
-              <p className="text-sm text-gray-500 mt-1">{subtask.description}</p>
+              <p className="text-sm text-gray-500 mt-1">
+                {subtask.description}
+              </p>
             )}
 
             {/* Subtask Assignees */}
