@@ -1,8 +1,9 @@
 import React from "react";
-import { CiCircleCheck } from "react-icons/ci";
+import { CiCircleCheck, CiClock2 } from "react-icons/ci";
 import { FaRegClock } from "react-icons/fa6";
 import { WiDirectionUpRight } from "react-icons/wi";
 import { Link } from "react-router-dom";
+import { truncateStr } from "../utils/utils";
 
 const TaskCard = ({ task }) => {
   // Count completed subtasks
@@ -13,12 +14,12 @@ const TaskCard = ({ task }) => {
   return (
     <Link
       to={`${task.id}`}
-      className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 p-5 w-full cursor-pointer group"
+      className="bg-white rounded-md shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 p-5 w-full cursor-pointer group"
     >
       <div className="flex justify-between items-start">
         <div className="flex flex-col gap-2">
-          <h2 className="text-xl font-semibold group-hover:text-blue-600 transition-colors duration-300">
-            {task.title}
+          <h2 className="text-lg font-semibold group-hover:text-blue-600 transition-colors duration-300">
+            {truncateStr(task.title, 25)}
           </h2>
           <p className="text-sm text-gray-500">
             {task.subTasks.length} Subtask
@@ -33,7 +34,7 @@ const TaskCard = ({ task }) => {
               title="Completed"
             />
           ) : (
-            <FaRegClock className="text-yellow-500 text-2xl" title="Pending" />
+            <CiClock2 className="text-yellow-500 text-2xl" title="Pending" />
           )}
         </div>
       </div>

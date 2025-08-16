@@ -40,7 +40,7 @@ const Users = () => {
   return (
     <div className="w-full min-h-screen wrapper">
       <div className="flex items-center justify-between ">
-        {/* <h1 className="text-xl font-bold">User Management</h1> */}
+        <h1 className="text-xl font-bold">User Management</h1>
         <Link
           to={"add"}
           className="text-sm bg-primary text-secondary px-3 py-2 rounded-md font-semibold flex items-center gap-1 hover:opacity-80 transition-all"
@@ -50,7 +50,7 @@ const Users = () => {
         </Link>
       </div>
 
-      <div className=" mt-8">
+      <div className="mt-8">
         <div className="hidden md:block overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead>

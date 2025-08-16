@@ -5,7 +5,7 @@ import Users from "./pages/dashboard/Users";
 import Dashboard from "./pages/Dashboard";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Posts from "./pages/Posts";
-import Tasks from "./pages/Tasks";
+import Tasks from "./pages/dashboard/Tasks";
 import Task from "./pages/Task";
 import ProtectedRoute from "./components/ProtectedRoute";
 import axios from "axios";
