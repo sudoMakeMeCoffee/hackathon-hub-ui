@@ -3,8 +3,11 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { TbTrash } from "react-icons/tb";
 import AddUserForm from "./AddUserForm";
 import axios from "axios";
+import useAuthStore from "../store/AuthStore";
 
 const UsersList = ({ showAddUserForm, setShowAddUserForm }) => {
+  const { user, isAuthenticated } = useAuthStore();
+
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
   const [users, setUsers] = useState([]);
@@ -29,11 +32,13 @@ const UsersList = ({ showAddUserForm, setShowAddUserForm }) => {
       });
   };
 
+  const deleteUser = () => {
+    axios.delete("http://localhost:8080/api/v1/user/" + contextMenu.user.id, {withCredentials: true})
+  }
+
   useEffect(() => {
     getAllUsers();
-  } ,[])
-
-  
+  }, []);
 
   // Filtered list
   const filteredUsers = users.filter(
@@ -64,12 +69,14 @@ const UsersList = ({ showAddUserForm, setShowAddUserForm }) => {
       {/* Top Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-xl font-bold text-primary">Users</h2>
-        <button
-          className="bg-primary text-secondary px-4 py-2 rounded hover:opacity-80"
-          onClick={() => setShowAddUserForm(true)}
-        >
-          + Add New User
-        </button>
+        {isAuthenticated && user.role == "ADMIN" && (
+          <button
+            className="bg-primary text-secondary px-4 py-2 rounded hover:opacity-80"
+            onClick={() => setShowAddUserForm(true)}
+          >
+            + Add New User
+          </button>
+        )}
       </div>
 
       {/* Filters */}
@@ -187,40 +194,14 @@ const UsersList = ({ showAddUserForm, setShowAddUserForm }) => {
             left: contextMenu.x,
           }}
         >
-          <button className="block w-full px-4 py-2 hover:bg-gray-100 text-left">
+          {/* <button className="block w-full px-4 py-2 hover:bg-gray-100 text-left">
             Edit
-          </button>
-          <button className="block w-full px-4 py-2 hover:bg-gray-100 text-left text-red-600">
+          </button> */}
+          <button className="block w-full px-4 py-2 hover:bg-gray-100 text-left text-red-600" onClick={() => deleteUser()}>
             Delete
           </button>
         </div>
       )}
-
-      {/* {contextMenu.visible && (
-        <div
-          className="absolute bg-white shadow-lg rounded border border-gray-200 text-sm"
-          style={{ top: contextMenu.y, left: contextMenu.x, zIndex: 1000 }}
-        >
-          <button
-            className="block w-full px-4 py-2 hover:bg-gray-100 text-left"
-            onClick={() => {
-              console.log("Edit", contextMenu.user);
-              closeContextMenu();
-            }}
-          >
-            Edit
-          </button>
-          <button
-            className="block w-full px-4 py-2 hover:bg-gray-100 text-left text-red-600"
-            onClick={() => {
-              console.log("Delete", contextMenu.user);
-              closeContextMenu();
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      )} */}
     </div>
   );
 };
