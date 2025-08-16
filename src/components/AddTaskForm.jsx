@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { CgClose } from "react-icons/cg";
 
-const AddTaskForm = ({setShowAddTaskForm}) => {
+const AddTaskForm = ({ setShowAddTaskForm }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [assigneeIds, setAssigneeIds] = useState([]);
@@ -65,8 +65,25 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true)
     const payload = { title, description, assigneeIds, subTasks };
+
+    if (title == "" || description == "" || subTasks.length < 1) {
+      alert("Main Task title and Description and atleast 1 sub task Required ");
+      return;
+    }
+
+    if (assigneeIds.length < 1) {
+      alert("Task should have atleast one assignee ");
+      return;
+    }
+
+    if (subTasks[0].title == "") {
+      alert("Sub task title is empty ");
+      return;
+    }
+
+    setIsLoading(true);
+
     axios
       .post("http://localhost:8080/api/v1/task", payload, {
         withCredentials: true,
@@ -87,16 +104,20 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
       .catch((err) => {
         console.error("Error creating task:", err);
         alert("Error creating task.");
-      }).finally(() => {
-        setIsLoading(false)
       })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Create Task</h2>
-        <CgClose className="text-2xl cursor-pointer" onClick={() => setShowAddTaskForm(false)}/>
+        <CgClose
+          className="text-2xl cursor-pointer"
+          onClick={() => setShowAddTaskForm(false)}
+        />
       </div>
 
       {/* Title */}
@@ -226,10 +247,7 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
         className="px-4 py-2 bg-blue-600 text-white rounded"
         disabled={isLoading}
       >
-
-       {
-        isLoading ? "Craeting Task ..." : "Create Task"
-       }
+        {isLoading ? "Craeting Task ..." : "Create Task"}
       </button>
     </div>
   );
