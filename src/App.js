@@ -4,26 +4,52 @@ import Login from "./pages/Login";
 import Users from "./pages/Users";
 import Dashboard from "./pages/Dashboard";
 import DashboardLayout from "./layouts/DashboardLayout";
-import BottomBarMenu from "./components/BottomBarMenu";
-import CreatePost from "./components/CreatePost";
 import Posts from "./pages/Posts";
 import Tasks from "./pages/Tasks";
 import Task from "./pages/Task";
+import ProtectedRoute from "./components/ProtectedRoute";
+import axios from "axios";
+import useAuthStore from "./store/AuthStore";
+import { useEffect } from "react";
 
 function App() {
+    const { isAuthenticated, setIsAuthenticated, user, setUser, setAuthLoading } = useAuthStore();
+
+  useEffect(() => {
+    axios
+      .post(
+        "http://localhost:8080/api/v1/auth/check-auth",
+        {},
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setUser(res.data.data);
+        setIsAuthenticated(true);
+      })
+      .catch(() => {
+        setUser(null);
+        setIsAuthenticated(false);
+      })
+      .finally(() => {
+        setAuthLoading(false); // ✅ set loading false after check
+      });
+  }, []);
   return (
     <Router>
       <Routes>
+        {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Dashboard routes with sidebar */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="tasks" element={<Tasks/>}/>
-          <Route path="tasks/:taskid" element={<Task/>}/>
-          <Route path="users" element={<Users />} />
-          <Route path="posts" element={<Posts />} />
+        {/* Protected routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="tasks" element={<Tasks />} />
+            <Route path="tasks/:taskid" element={<Task />} />
+            <Route path="users" element={<Users />} />
+            <Route path="posts" element={<Posts />} />
+          </Route>
         </Route>
       </Routes>
     </Router>
