@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
   return (
-    <div className="bg-secondary min-h-[100vh-70px]">
+    <div className="bg-secondary min-h-screen">
       {/* Sidebar */}
       {/* <DashboardNav /> */}
 
@@ -14,7 +14,7 @@ const DashboardLayout = () => {
       <DashboardSideNav />
 
       {/* Main content */}
-      <div className="bg-secondary min-h-screen md:p-4 mt-[70px] ml-[400px]">
+      <div className="bg-secondary min-h-screen py-4 mt-[70px] md:ml-[250px]">
         <Outlet />
       </div>
     </div>

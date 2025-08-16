@@ -25,7 +25,7 @@ module.exports = {
         sm: "0.5rem",
         md: "1rem",
         lg: "1.5rem",
-        xl: "2rem",
+        xl: "4rem",
       },
       fontSize: {
         sm: ["0.875rem", "1.25rem"],
@@ -75,12 +75,12 @@ module.exports = {
           paddingLeft: "1rem",
           paddingRight: "1rem",
           [`@screen sm`]: {
-            paddingLeft: "spacing.lg",
-            paddingRight: "spacing.lg",
+            paddingLeft: "spacing.2xl",
+            paddingRight: "spacing.2xl",
           },
           [`@screen lg`]: {
-            paddingLeft: "spacing.xl",
-            paddingRight: "spacing.xl",
+            paddingLeft: "3rem",
+            paddingRight: "3rem",
             maxWidth: "maxWidth.7xl",
           },
         },
