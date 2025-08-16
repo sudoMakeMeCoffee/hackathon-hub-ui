@@ -28,19 +28,24 @@ const Task = () => {
   }
 
   const completeSubtask = (taskId, subtaskId) => {
-    
-    axios
-      .put(
-        `http://localhost:8080/api/v1/task/${taskId}/subtasks/${subtaskId}/complete`,
-        {},
-        { withCredentials: true }
-      )
-      .then(() => {
-        fetchTask();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const userConfirmed = window.confirm(
+      "Do you want to mark this sub task as complete?"
+    );
+
+    if (userConfirmed) {
+      axios
+        .put(
+          `http://localhost:8080/api/v1/task/${taskId}/subtasks/${subtaskId}/complete`,
+          {},
+          { withCredentials: true }
+        )
+        .then(() => {
+          fetchTask();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   };
 
   return (
