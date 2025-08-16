@@ -1,14 +1,35 @@
 import React, { useState } from "react";
 import useAuthStore from "../store/AuthStore";
+import axios from "axios";
 
 const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
+  const [isLaoding, setIsLoading] = useState(false);
   const { user } = useAuthStore();
 
   const handleSubmit = (e) => {
+
+    if(newPassword == ""){
+        return
+    }
+
+    setIsLoading(true)
+
     e.preventDefault();
-    if (!newPassword.trim()) return;
-    setNewPassword("");
+    axios.put(
+      "http://localhost:8080/api/v1/auth/change-password",
+      {
+        newPassword: newPassword,
+      },
+      { withCredentials: true }
+    ).then((res) => {
+        alert("Password Changed Successfully.")
+    }).catch((err) => {
+        console.log(err)
+    }).finally(() => {
+        setIsLoading(false)
+    })
+
   };
 
   return (
@@ -51,10 +72,12 @@ const Profile = () => {
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           className="w-full input-field input-md"
+          disabled={isLaoding}
         />
         <button
           type="submit"
           className="w-full btn-primary btn-md"
+          disabled={isLaoding}
         >
           Update Password
         </button>
