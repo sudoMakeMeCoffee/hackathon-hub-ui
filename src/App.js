@@ -13,6 +13,7 @@ import useAuthStore from "./store/AuthStore";
 import { useEffect } from "react";
 import Profile from "./pages/Profile";
 import api from "./api/axios";
+import AddUser from "./pages/dashboard/AddUser";
 
 function App() {
     const { isAuthenticated, setIsAuthenticated, user, setUser, setAuthLoading } = useAuthStore();
@@ -50,6 +51,7 @@ function App() {
             <Route path="tasks" element={<Tasks />} />
             <Route path="tasks/:taskid" element={<Task />} />
             <Route path="users" element={<Users />} />
+            <Route path="users/add" element={<AddUser />} />
             <Route path="posts" element={<Posts />} />
             <Route path="profile" element={<Profile />} />
           </Route>

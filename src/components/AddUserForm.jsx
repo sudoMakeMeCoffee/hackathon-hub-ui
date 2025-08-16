@@ -14,12 +14,14 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [position, setPosition] = useState("");
   const [err, setErr] = useState("");
   const [errors, setErrors] = useState({
     fullName: "",
     email: "",
     password: "",
     role: "",
+    position: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,7 +33,7 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
   };
 
   useEffect(() => {
-    setErr("");
+    setErrors("");
     const timeout = setTimeout(() => {
       if (email) {
         checkEmail();
@@ -42,8 +44,8 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
   }, [email]);
 
   useEffect(() => {
-    setErr("");
-  }, [password]);
+    setErrors("");
+  }, [password, email, fullName, role, position]);
 
   const addUser = async () => {
     try {
@@ -61,7 +63,7 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
         }
       );
       setIsLoading(false);
-      setShowAddUserForm(false)
+      setShowAddUserForm(false);
     } catch (error) {
       setErr(error.response?.data?.message);
       console.log(error);
@@ -71,7 +73,7 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErr("");
+    setErrors("");
     checkEmail();
     if (password.length < 1) {
       setErrors((prev) => ({
@@ -81,18 +83,38 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
       return;
     }
 
+    if (fullName.length < 1) {
+      setErrors((prev) => ({
+        ...prev,
+        fullName: "Full Name is required",
+      }));
+      return;
+    }
+
+    if (role.length < 1) {
+      setErrors((prev) => ({
+        ...prev,
+        position: "Position is required",
+      }));
+      return;
+    }
+
+    if (role.length < 1) {
+      setErrors((prev) => ({
+        ...prev,
+        role: "Role is required",
+      }));
+      return;
+    }
+
     addUser();
   };
   return (
-    <form className="flex flex-col gap-4 w-full max-w-[400px]" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col gap-4 w-full max-w-[400px]"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col gap-2">
-        <h1 className="text-xl font-medium flex items-center justify-between">
-          Add New User
-          <CgClose
-            className="text-primary cursor-pointer"
-            onClick={() => setShowAddUserForm(false)}
-          />
-        </h1>
         <span className="font-light text-sm"></span>
         {err && (
           <>
@@ -110,7 +132,7 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
           type="text"
           placeholder="Full Name"
           name="fullName"
-          className="input-field input-md"
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
           onChange={(e) => setFullName(e.target.value)}
           value={fullName}
           disabled={isLoading}
@@ -121,10 +143,10 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
       </div>
       <div className="flex flex-col gap-1">
         <input
-          type="email"
+          type="text"
           placeholder="Email"
           name="email"
-          className="input-field input-md"
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           disabled={isLoading}
@@ -137,7 +159,7 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
           type="password"
           placeholder="Password"
           name="password"
-          className="input-field input-md"
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           disabled={isLoading}
@@ -149,9 +171,29 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
 
       <div className="flex flex-col gap-1">
         <select
+          name="position"
+          id=""
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
+          disabled={isLoading}
+          onChange={(e) => setPosition(e.target.value)}
+        >
+          <option value="" disabled selected>
+            Select Position
+          </option>
+          <option value="President">President</option>
+          <option value="Vice President">Vice President</option>
+          <option value="Member">Member</option>
+        </select>
+        <span className="text-sm font-light text-red-500">
+          {errors.position}
+        </span>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <select
           name="role"
           id=""
-          className="input-field input-md"
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
           disabled={isLoading}
           onChange={(e) => setRole(e.target.value)}
         >
@@ -169,14 +211,6 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
         {isLoading && (
           <div className=" ml-1 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
         )}
-      </button>
-      <button
-        type="button"
-        className="btn-secondary btn-md"
-        disabled={isLoading}
-        onClick={() => setShowAddUserForm(false)}
-      >
-        Cancel
       </button>
     </form>
   );
