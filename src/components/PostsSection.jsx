@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./Post";
+import axios from "axios";
 
 const PostsSection = () => {
+  const [posts, setPosts] = useState([]);
+
+  const getAllPosts = () => {
+    axios
+      .get("http://localhost:8080/api/v1/post", { withCredentials: true })
+      .then((res) => {
+        setPosts(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getAllPosts();
+  }, []);
+
   return (
     <div className="w-full p-4 h-max min-h-screen flex flex-col items-center">
-      <Post
-        src={
-          "https://thumbs.dreamstime.com/b/sea-water-ocean-wave-surfing-surface-colorful-vibrant-sunset-barrel-shape-124362369.jpg"
-        }
-      />
-      <Post
-        src={
-          "https://images.pexels.com/photos/13439521/pexels-photo-13439521.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-        }
-      />
+      {posts.map((post) => (
+        <Post src={`http://localhost:8080/uploads/${post.imagePath}`} />
+      ))}
     </div>
   );
 };
