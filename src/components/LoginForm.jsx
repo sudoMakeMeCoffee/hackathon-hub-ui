@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { isValidEmail } from "../utils/utils";
 import { CiWarning } from "react-icons/ci";
 import useAuthStore from "../store/AuthStore";
+import api from "../api/axios";
 
 const LoginForm = () => {
   const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
@@ -45,8 +46,8 @@ const LoginForm = () => {
   const signIn = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.post(
-        "http://localhost:8080/api/v1/auth/signin",
+      const res = await api.post(
+        "/api/v1/auth/signin",
         {
           email: email,
           password: password,

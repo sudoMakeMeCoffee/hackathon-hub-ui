@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import axios from "axios";
+import api from "../api/axios";
 
 const PostsSection = () => {
   const [posts, setPosts] = useState([]);
 
   const getAllPosts = () => {
-    axios
-      .get("http://localhost:8080/api/v1/post", { withCredentials: true })
+    api
+      .get("/api/v1/post", { withCredentials: true })
       .then((res) => {
         setPosts(res.data.data);
       })

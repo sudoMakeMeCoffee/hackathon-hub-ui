@@ -1,14 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import api from "../api/axios";
 
 const Task = () => {
   const { taskid } = useParams();
   const [task, setTask] = useState(null);
 
   const fetchTask = () => {
-    axios
-      .get(`http://localhost:8080/api/v1/task/${taskid}`, {
+    api
+      .get(`/api/v1/task/${taskid}`, {
         withCredentials: true,
       })
       .then((res) => setTask(res.data.data))
@@ -33,9 +34,9 @@ const Task = () => {
     );
 
     if (userConfirmed) {
-      axios
+      api
         .put(
-          `http://localhost:8080/api/v1/task/${taskId}/subtasks/${subtaskId}/complete`,
+          `/api/v1/task/${taskId}/subtasks/${subtaskId}/complete`,
           {},
           { withCredentials: true }
         )

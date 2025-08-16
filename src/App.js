@@ -12,14 +12,15 @@ import axios from "axios";
 import useAuthStore from "./store/AuthStore";
 import { useEffect } from "react";
 import Profile from "./pages/Profile";
+import api from "./api/axios";
 
 function App() {
     const { isAuthenticated, setIsAuthenticated, user, setUser, setAuthLoading } = useAuthStore();
 
   useEffect(() => {
-    axios
+    api
       .post(
-        "http://localhost:8080/api/v1/auth/check-auth",
+        "/api/v1/auth/check-auth",
         {},
         { withCredentials: true }
       )

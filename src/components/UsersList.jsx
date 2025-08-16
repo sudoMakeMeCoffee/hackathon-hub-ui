@@ -4,6 +4,7 @@ import { TbTrash } from "react-icons/tb";
 import AddUserForm from "./AddUserForm";
 import axios from "axios";
 import useAuthStore from "../store/AuthStore";
+import api from "../api/axios";
 
 const UsersList = ({ showAddUserForm, setShowAddUserForm }) => {
   const { user, isAuthenticated } = useAuthStore();
@@ -19,8 +20,8 @@ const UsersList = ({ showAddUserForm, setShowAddUserForm }) => {
   });
 
   const getAllUsers = () => {
-    axios
-      .get("http://localhost:8080/api/v1/user", {
+    api
+      .get("/api/v1/user", {
         withCredentials: true,
       })
       .then((res) => {
@@ -33,7 +34,7 @@ const UsersList = ({ showAddUserForm, setShowAddUserForm }) => {
   };
 
   const deleteUser = () => {
-    axios.delete("http://localhost:8080/api/v1/user/" + contextMenu.user.id, {withCredentials: true})
+    api.delete("/api/v1/user/" + contextMenu.user.id, {withCredentials: true})
   }
 
   useEffect(() => {

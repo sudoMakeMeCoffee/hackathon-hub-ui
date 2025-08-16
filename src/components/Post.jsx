@@ -24,7 +24,7 @@ const Post = ({ post }) => {
 
         <div className="w-full   rounded-md">
           <div>
-            <img src={`http://localhost:8080/uploads/${post.imagePath}`} alt="" className="w-full rounded-md" />
+            <img src={`${process.env.REACT_APP_API_URL}/uploads/${post.imagePath}`} alt="" className="w-full rounded-md" />
           </div>
         </div>
 

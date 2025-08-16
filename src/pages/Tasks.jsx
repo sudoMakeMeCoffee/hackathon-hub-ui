@@ -3,6 +3,7 @@ import AddTaskForm from "../components/AddTaskForm";
 import TaskList from "../components/TaskList";
 import TaskInfoCard from "../components/TaskInfoCard";
 import axios from "axios";
+import api from "../api/axios";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -12,7 +13,7 @@ const Tasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/v1/task", {
+        const res = await api.get("/api/v1/task", {
           withCredentials: true,
         });
         setTasks(res.data.data);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CgClose } from "react-icons/cg";
+import api from "../api/axios";
 
 const AddTaskForm = ({ setShowAddTaskForm }) => {
   const [title, setTitle] = useState("");
@@ -14,8 +15,8 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
   ]);
 
   const getAllUsers = () => {
-    axios
-      .get("http://localhost:8080/api/v1/user", {
+    api
+      .get("/api/v1/user", {
         withCredentials: true,
       })
       .then((res) => {
@@ -84,8 +85,8 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
 
     setIsLoading(true);
 
-    axios
-      .post("http://localhost:8080/api/v1/task", payload, {
+    api
+      .post("/api/v1/task", payload, {
         withCredentials: true,
       })
       .then((res) => {

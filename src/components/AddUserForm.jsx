@@ -5,6 +5,7 @@ import { isValidEmail } from "../utils/utils";
 import { CiWarning } from "react-icons/ci";
 import { CgClose } from "react-icons/cg";
 import useAuthStore from "../store/AuthStore";
+import api from "../api/axios";
 
 const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
   const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
@@ -47,8 +48,8 @@ const AddUserForm = ({ showAddUserForm, setShowAddUserForm }) => {
   const addUser = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.post(
-        "http://localhost:8080/api/v1/auth/add-user",
+      const res = await api.post(
+        "/api/v1/auth/add-user",
         {
           username: fullName,
           email: email,

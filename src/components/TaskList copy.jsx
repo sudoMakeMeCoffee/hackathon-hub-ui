@@ -3,6 +3,7 @@ import axios from "axios";
 import { TiTick } from "react-icons/ti";
 import { FiWatch } from "react-icons/fi";
 import { MdOutlineWatchLater } from "react-icons/md";
+import api from "../api/axios";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -10,8 +11,8 @@ const TaskList = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const res = await axios.post(
-          "http://localhost:8080/api/v1/task/all",
+        const res = await api.post(
+          "/api/v1/task/all",
           {},
           { withCredentials: true }
         );

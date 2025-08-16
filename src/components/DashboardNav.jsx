@@ -4,6 +4,7 @@ import { MdAddTask, MdLogout, MdOutlineDashboard } from "react-icons/md";
 import { RiProfileLine, RiUserAddLine } from "react-icons/ri";
 import axios from "axios";
 import { ImProfile } from "react-icons/im";
+import api from "../api/axios";
 
 const DashboardNav = () => {
   const location = useLocation();
@@ -12,9 +13,9 @@ const DashboardNav = () => {
   const isActive = (path) => location.pathname === path;
 
   const logout = () => {
-    axios
+    api
       .post(
-        "http://localhost:8080/api/v1/auth/logout",
+        "/api/v1/auth/logout",
         {},
         { withCredentials: true }
       )

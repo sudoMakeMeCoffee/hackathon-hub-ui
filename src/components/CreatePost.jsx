@@ -3,6 +3,7 @@ import axios from "axios";
 import { CgClose } from "react-icons/cg";
 import { FaBold, FaItalic, FaUnderline } from "react-icons/fa6";
 import { IoImageOutline } from "react-icons/io5";
+import api from "../api/axios";
 
 const CreatePost = () => {
   const [text, setText] = useState("");
@@ -68,8 +69,8 @@ const CreatePost = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/post/create",
+      const response = await api.post(
+        "/api/v1/post/create",
         formData,
         {
           headers: {
@@ -168,7 +169,7 @@ const CreatePost = () => {
           </button>
         </div>
       )}
-      
+
       {/* Hidden File Input */}
       <input
         type="file"

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useAuthStore from "../store/AuthStore";
 import axios from "axios";
+import api from "../api/axios";
 
 const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -16,8 +17,8 @@ const Profile = () => {
     setIsLoading(true)
 
     e.preventDefault();
-    axios.put(
-      "http://localhost:8080/api/v1/auth/change-password",
+    api.put(
+      "/api/v1/auth/change-password",
       {
         newPassword: newPassword,
       },
