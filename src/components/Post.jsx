@@ -1,6 +1,6 @@
 import { BiDotsHorizontal } from "react-icons/bi";
 
-const Post = ({ src }) => {
+const Post = ({ post }) => {
   return (
     <div>
       <div className="flex flex-col gap-3 w-full md:w-[550px] max-w-[550px]">
@@ -13,7 +13,7 @@ const Post = ({ src }) => {
             />
             <div className="text-sm">
               <div className="flex gap-2 ">
-                <span className="font-bold">K.K. Joshua Persiloyer</span>
+                <span className="font-bold">{post.createdBy.username}</span>
                 <span className="text-gray-600">• 9h</span>
               </div>
               <span className="text-sm text-gray-600">Presidant</span>
@@ -24,16 +24,12 @@ const Post = ({ src }) => {
 
         <div className="w-full   rounded-md">
           <div>
-            <img src={src} alt="" className="w-full rounded-md" />
+            <img src={`http://localhost:8080/uploads/${post.imagePath}`} alt="" className="w-full rounded-md" />
           </div>
         </div>
 
         <p className="text-sm">
-          Get set for a sensational music experience at the iconic Port City
-          Colombo ... Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Commodi necessitatibus repudiandae maxime minus nihil quasi, provident
-          asperiores aliquam magnam, obcaecati itaque iste, ipsum aliquid
-          temporibus odio! Nam illo doloremque tempora.
+         {post.caption}
           <span className="text-gray-300 text-sm cursor-pointer">more</span>
         </p>
       </div>

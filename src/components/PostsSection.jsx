@@ -23,7 +23,7 @@ const PostsSection = () => {
   return (
     <div className="w-full p-4 h-max min-h-screen flex flex-col items-center">
       {posts.map((post) => (
-        <Post src={`http://localhost:8080/uploads/${post.imagePath}`} />
+        <Post post={post} />
       ))}
     </div>
   );
