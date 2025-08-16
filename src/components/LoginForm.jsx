@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { isValidEmail } from "../utils/utils";
 import { CiWarning } from "react-icons/ci";
 import useAuthStore from "../store/AuthStore";
 
 const LoginForm = () => {
-    const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
+  const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
 
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
@@ -18,68 +20,73 @@ const LoginForm = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-    const checkEmail = async () => {
+  const checkEmail = async () => {
+    setErrors((prev) => ({
+      ...prev,
+      email: !isValidEmail(email) ? "Enter a valid email" : "",
+    }));
+  };
+
+  useEffect(() => {
+    setErr("");
+    const timeout = setTimeout(() => {
+      if (email) {
+        checkEmail();
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [email]);
+
+  useEffect(() => {
+    setErr("");
+  }, [password]);
+
+  const signIn = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.post(
+        "http://localhost:8080/api/v1/auth/signin",
+        {
+          email: email,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setIsLoading(false);
+      setIsAuthenticated(true);
+      setUser(res.data.data);
+      const params = new URLSearchParams(location.search);
+      const redirectTo = params.get("redirect") || "/dashboard";
+      navigate(redirectTo, { replace: true });
+    } catch (error) {
+      setErr(error.response?.data?.message);
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErr("");
+    checkEmail();
+    if (password.length < 1) {
       setErrors((prev) => ({
         ...prev,
-        email: !isValidEmail(email) ? "Enter a valid email" : "",
+        password: "Password is required",
       }));
-    };
+      return;
+    }
 
-    useEffect(() => {
-      setErr("");
-      const timeout = setTimeout(() => {
-        if (email) {
-          checkEmail();
-        }
-      }, 500);
-
-      return () => clearTimeout(timeout);
-    }, [email]);
-
-    useEffect(() => {
-      setErr("");
-    }, [password]);
-
-    const signIn = async () => {
-      try {
-        setIsLoading(true);
-        const res = await axios.post(
-          "http://localhost:8080/api/v1/auth/signin",
-          {
-            email: email,
-            password: password,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-        setIsLoading(false);
-        setIsAuthenticated(true);
-        setUser(res.data.data);
-        navigate("/dashboard");
-      } catch (error) {
-        setErr(error.response?.data?.message);
-        console.log(error);
-        setIsLoading(false);
-      }
-    };
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      setErr("");
-      checkEmail();
-      if (password.length < 1) {
-        setErrors((prev) => ({
-          ...prev,
-          password: "Password is required",
-        }));
-        return;
-      }
-
-      signIn();
-    };
+    signIn();
+  };
   return (
-    <form className="flex flex-col gap-4 w-full max-w-[400px]" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col gap-4 w-full max-w-[400px]"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-medium">
           Welcome ! <br />
