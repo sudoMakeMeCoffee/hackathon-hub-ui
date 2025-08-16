@@ -8,6 +8,7 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
   const [assigneeIds, setAssigneeIds] = useState([]);
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [subTasks, setSubTasks] = useState([
     { title: "", description: "", assigneeIds: [], searchQuery: "" },
   ]);
@@ -64,6 +65,7 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true)
     const payload = { title, description, assigneeIds, subTasks };
     axios
       .post("http://localhost:8080/api/v1/task", payload, {
@@ -85,7 +87,9 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
       .catch((err) => {
         console.error("Error creating task:", err);
         alert("Error creating task.");
-      });
+      }).finally(() => {
+        setIsLoading(false)
+      })
   };
 
   return (
@@ -102,6 +106,7 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         className="w-full border rounded p-2"
+        disabled={isLoading}
       />
 
       {/* Description */}
@@ -110,6 +115,7 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         className="w-full border rounded p-2"
+        disabled={isLoading}
       />
 
       {/* Main Assignees Search */}
@@ -121,6 +127,7 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full border rounded p-2 mb-2"
+          disabled={isLoading}
         />
         <div className="flex flex-wrap gap-2">
           {users
@@ -156,12 +163,14 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
               value={sub.title}
               onChange={(e) => updateSubTask(i, "title", e.target.value)}
               className="w-full border rounded p-2"
+              disabled={isLoading}
             />
             <textarea
               placeholder="Subtask Description"
               value={sub.description}
               onChange={(e) => updateSubTask(i, "description", e.target.value)}
               className="w-full border rounded p-2"
+              disabled={isLoading}
             />
 
             {/* Subtask Assignees Search */}
@@ -171,6 +180,7 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
               value={sub.searchQuery || ""}
               onChange={(e) => updateSubTask(i, "searchQuery", e.target.value)}
               className="w-full border rounded p-2 mb-2"
+              disabled={isLoading}
             />
 
             <div>
@@ -204,6 +214,7 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
           type="button"
           onClick={addSubTask}
           className="px-3 py-1 bg-gray-300 rounded"
+          disabled={isLoading}
         >
           + Add Subtask
         </button>
@@ -213,8 +224,12 @@ const AddTaskForm = ({setShowAddTaskForm}) => {
       <button
         onClick={handleSubmit}
         className="px-4 py-2 bg-blue-600 text-white rounded"
+        disabled={isLoading}
       >
-        Create Task
+
+       {
+        isLoading ? "Craeting Task ..." : "Create Task"
+       }
       </button>
     </div>
   );
