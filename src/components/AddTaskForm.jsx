@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { CgClose } from "react-icons/cg";
 import api from "../api/axios";
 import { BeatLoader } from "react-spinners";
-import { FaCross, FaPlus } from "react-icons/fa6";
-import { IoClose, IoPulse } from "react-icons/io5";
+import { FaPlus, FaTrash } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const AddTaskForm = ({ setShowAddTaskForm }) => {
   const [title, setTitle] = useState("");
@@ -19,16 +18,9 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
 
   const getAllUsers = () => {
     api
-      .get("/api/v1/user", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log("Users fetched successfully:", res.data);
-        setUsers(res.data.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching users:", err);
-      });
+      .get("/api/v1/user", { withCredentials: true })
+      .then((res) => setUsers(res.data.data))
+      .catch((err) => console.error("Error fetching users:", err));
   };
 
   useEffect(() => {
@@ -68,31 +60,35 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
     ]);
   };
 
+  const deleteSubTask = (index) => {
+    const updated = [...subTasks];
+    updated.splice(index, 1);
+    setSubTasks(updated);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = { title, description, assigneeIds, subTasks };
 
-    if (title == "" || description == "" || subTasks.length < 1) {
-      alert("Main Task title and Description and atleast 1 sub task Required ");
+    if (title === "" || description === "" || subTasks.length < 1) {
+      alert("Main Task title, Description, and at least 1 subtask required.");
       return;
     }
 
     if (assigneeIds.length < 1) {
-      alert("Task should have atleast one assignee ");
+      alert("Task should have at least one assignee.");
       return;
     }
 
-    if (subTasks[0].title == "") {
-      alert("Sub task title is empty ");
+    if (subTasks[0].title === "") {
+      alert("Subtask title is empty.");
       return;
     }
 
     setIsLoading(true);
 
     api
-      .post("/api/v1/task", payload, {
-        withCredentials: true,
-      })
+      .post("/api/v1/task", payload, { withCredentials: true })
       .then((res) => {
         if (res.data.success) {
           alert("Task created successfully!");
@@ -110,13 +106,11 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
         console.error("Error creating task:", err);
         alert("Error creating task.");
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   };
 
   return (
-    <form action="" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="flex flex-col gap-y-4 mt-8">
         {/* Title */}
         <input
@@ -137,7 +131,7 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
           disabled={isLoading}
         />
 
-        {/* Main Assignees Search */}
+        {/* Main Assignees */}
         <div>
           <p className="font-medium mb-2">Assign to:</p>
           <input
@@ -177,7 +171,20 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
         <div className="space-y-4">
           <p className="font-medium">Subtasks:</p>
           {subTasks.map((sub, i) => (
-            <div key={i} className="p-3 border flex flex-col rounded space-y-2">
+            <div
+              key={i}
+              className="p-3 border flex flex-col rounded space-y-2 relative"
+            >
+              {/* Delete button */}
+              <button
+                type="button"
+                onClick={() => deleteSubTask(i)}
+                className="absolute top-[-10px] right-[-10px] text-gray-500 hover:text-red-500"
+                disabled={isLoading}
+              >
+                <IoIosCloseCircle className="text-3xl"/>
+              </button>
+
               <input
                 type="text"
                 placeholder="Subtask Title"
@@ -196,7 +203,7 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
                 disabled={isLoading}
               />
 
-              {/* Subtask Assignees Search */}
+              {/* Subtask Assignees */}
               <input
                 type="text"
                 placeholder="Search sub task assignees..."
@@ -212,7 +219,7 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
                 <p className="mb-1 text-sm font-medium">Assign to:</p>
                 <div className="flex flex-wrap gap-2">
                   {users
-                    .filter((u) => assigneeIds.includes(u.id)) // only main task assignees
+                    .filter((u) => assigneeIds.includes(u.id))
                     .filter((u) =>
                       u.username
                         .toLowerCase()
@@ -229,11 +236,7 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
                             : "bg-gray-200"
                         }`}
                       >
-                        {sub.assigneeIds.includes(u.id) ? (
-                          <IoClose />
-                        ) : (
-                          <FaPlus />
-                        )}
+                        {sub.assigneeIds.includes(u.id) ? <IoClose /> : <FaPlus />}
                         {u.username}
                       </button>
                     ))}
@@ -243,7 +246,7 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
           ))}
           <button
             type="button"
-            className="bg-gray-200 px-3 py-2 text-sm  rounded-md"
+            className="bg-gray-200 px-3 py-2 text-sm rounded-md"
             onClick={addSubTask}
             disabled={isLoading}
           >
