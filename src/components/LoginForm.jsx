@@ -5,6 +5,7 @@ import { isValidEmail } from "../utils/utils";
 import { CiWarning } from "react-icons/ci";
 import useAuthStore from "../store/AuthStore";
 import api from "../api/axios";
+import { BeatLoader } from "react-spinners";
 
 const LoginForm = () => {
   const { isAuthenticated, setIsAuthenticated, user, setUser } = useAuthStore();
@@ -111,7 +112,7 @@ const LoginForm = () => {
           type="email"
           placeholder="Email"
           name="email"
-          className="input-field input-md"
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           disabled={isLoading}
@@ -124,7 +125,7 @@ const LoginForm = () => {
           type="password"
           placeholder="Password"
           name="password"
-          className="input-field input-md"
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           disabled={isLoading}
@@ -134,10 +135,15 @@ const LoginForm = () => {
         </span>
       </div>
 
-      <button type="submit" className="btn-primary btn-md" disabled={isLoading}>
-        Log In
-        {isLoading && (
-          <div className=" ml-1 animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+      <button
+        type="submit"
+        className="text-sm bg-primary text-secondary px-3 py-2 rounded-md font-semibold"
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <BeatLoader color={"#ffffff"} loading={isLoading} size={3} />
+        ) : (
+          "Log In"
         )}
       </button>
     </form>
