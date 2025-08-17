@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import api from "./api/axios";
 import AddUser from "./pages/dashboard/AddUser";
 import Loader from "./components/Loader";
+import AddTask from "./pages/dashboard/AddTask";
 
 function App() {
     const { isAuthenticated, setIsAuthenticated, user, setUser, setAuthLoading } = useAuthStore();
@@ -53,6 +54,7 @@ function App() {
             <Route path="tasks/:taskid" element={<Task />} />
             <Route path="users" element={<Users />} />
             <Route path="users/add" element={<AddUser />} />
+            <Route path="tasks/add" element={<AddTask />} />
             <Route path="posts" element={<Posts />} />
             <Route path="profile" element={<Profile />} />
           </Route>

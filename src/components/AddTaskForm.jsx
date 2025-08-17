@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { CgClose } from "react-icons/cg";
 import api from "../api/axios";
+import { BeatLoader } from "react-spinners";
+import { FaCross, FaPlus } from "react-icons/fa6";
+import { IoClose, IoPulse } from "react-icons/io5";
 
 const AddTaskForm = ({ setShowAddTaskForm }) => {
   const [title, setTitle] = useState("");
@@ -65,7 +68,8 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
     ]);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const payload = { title, description, assigneeIds, subTasks };
 
     if (title == "" || description == "" || subTasks.length < 1) {
@@ -112,145 +116,155 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
   };
 
   return (
-    <div className="flex flex-col gap-y-4">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Create Task</h2>
-        <CgClose
-          className="text-2xl cursor-pointer"
-          onClick={() => setShowAddTaskForm(false)}
-        />
-      </div>
-
-      {/* Title */}
-      <input
-        type="text"
-        placeholder="Task Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="w-full border rounded p-2"
-        disabled={isLoading}
-      />
-
-      {/* Description */}
-      <textarea
-        placeholder="Task Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="w-full border rounded p-2"
-        disabled={isLoading}
-      />
-
-      {/* Main Assignees Search */}
-      <div>
-        <p className="font-medium mb-2">Assign to:</p>
+    <form action="" onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-y-4 mt-8">
+        {/* Title */}
         <input
           type="text"
-          placeholder="Search users..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full border rounded p-2 mb-2"
+          placeholder="Task Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
           disabled={isLoading}
         />
-        <div className="flex flex-wrap gap-2">
-          {users
-            .filter((u) =>
-              u.username.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .map((u) => (
-              <button
-                key={u.id}
-                onClick={() =>
-                  toggleAssignee(assigneeIds, setAssigneeIds, u.id)
-                }
-                className={`px-3 py-1 rounded border ${
-                  assigneeIds.includes(u.id)
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200"
-                }`}
-              >
-                {u.username}
-              </button>
-            ))}
+
+        {/* Description */}
+        <textarea
+          placeholder="Task Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
+          disabled={isLoading}
+        />
+
+        {/* Main Assignees Search */}
+        <div>
+          <p className="font-medium mb-2">Assign to:</p>
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full border rounded p-2 mb-2"
+            disabled={isLoading}
+          />
+          <div className="flex flex-wrap gap-2">
+            {users
+              .filter((u) =>
+                u.username.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+              .map((u) => (
+                <button
+                  key={u.id}
+                  type="button"
+                  onClick={() =>
+                    toggleAssignee(assigneeIds, setAssigneeIds, u.id)
+                  }
+                  className={`px-3 py-2 rounded-md text-sm flex items-center gap-1 ${
+                    assigneeIds.includes(u.id)
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200"
+                  }`}
+                >
+                  {assigneeIds.includes(u.id) ? <IoClose /> : <FaPlus />}
+                  {u.username}
+                </button>
+              ))}
+          </div>
         </div>
-      </div>
 
-      {/* Subtasks */}
-      <div className="space-y-4">
-        <p className="font-medium">Subtasks:</p>
-        {subTasks.map((sub, i) => (
-          <div key={i} className="p-3 border rounded space-y-2">
-            <input
-              type="text"
-              placeholder="Subtask Title"
-              value={sub.title}
-              onChange={(e) => updateSubTask(i, "title", e.target.value)}
-              className="w-full border rounded p-2"
-              disabled={isLoading}
-            />
-            <textarea
-              placeholder="Subtask Description"
-              value={sub.description}
-              onChange={(e) => updateSubTask(i, "description", e.target.value)}
-              className="w-full border rounded p-2"
-              disabled={isLoading}
-            />
+        {/* Subtasks */}
+        <div className="space-y-4">
+          <p className="font-medium">Subtasks:</p>
+          {subTasks.map((sub, i) => (
+            <div key={i} className="p-3 border flex flex-col rounded space-y-2">
+              <input
+                type="text"
+                placeholder="Subtask Title"
+                value={sub.title}
+                onChange={(e) => updateSubTask(i, "title", e.target.value)}
+                className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
+                disabled={isLoading}
+              />
+              <textarea
+                placeholder="Subtask Description"
+                value={sub.description}
+                onChange={(e) =>
+                  updateSubTask(i, "description", e.target.value)
+                }
+                className="border border-gray-200 bg-secondary text-sm rounded-md px-3 py-2 focus:outline-none focus:border-primary transition-all"
+                disabled={isLoading}
+              />
 
-            {/* Subtask Assignees Search */}
-            <input
-              type="text"
-              placeholder="Search subtask assignees..."
-              value={sub.searchQuery || ""}
-              onChange={(e) => updateSubTask(i, "searchQuery", e.target.value)}
-              className="w-full border rounded p-2 mb-2"
-              disabled={isLoading}
-            />
+              {/* Subtask Assignees Search */}
+              <input
+                type="text"
+                placeholder="Search sub task assignees..."
+                value={sub.searchQuery || ""}
+                onChange={(e) =>
+                  updateSubTask(i, "searchQuery", e.target.value)
+                }
+                className="w-full border rounded p-2 mb-2"
+                disabled={isLoading}
+              />
 
-            <div>
-              <p className="mb-1 text-sm font-medium">Assign to:</p>
-              <div className="flex flex-wrap gap-2">
-                {users
-                  .filter((u) => assigneeIds.includes(u.id)) // only main task assignees
-                  .filter((u) =>
-                    u.username
-                      .toLowerCase()
-                      .includes((sub.searchQuery || "").toLowerCase())
-                  )
-                  .map((u) => (
-                    <button
-                      key={u.id}
-                      onClick={() => toggleSubTaskAssignee(i, u.id)}
-                      className={`px-3 py-1 rounded border ${
-                        sub.assigneeIds.includes(u.id)
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-200"
-                      }`}
-                    >
-                      {u.username}
-                    </button>
-                  ))}
+              <div>
+                <p className="mb-1 text-sm font-medium">Assign to:</p>
+                <div className="flex flex-wrap gap-2">
+                  {users
+                    .filter((u) => assigneeIds.includes(u.id)) // only main task assignees
+                    .filter((u) =>
+                      u.username
+                        .toLowerCase()
+                        .includes((sub.searchQuery || "").toLowerCase())
+                    )
+                    .map((u) => (
+                      <button
+                        key={u.id}
+                        type="button"
+                        onClick={() => toggleSubTaskAssignee(i, u.id)}
+                        className={`px-3 py-2 rounded-md text-sm flex items-center gap-1 ${
+                          sub.assigneeIds.includes(u.id)
+                            ? "bg-green-500 text-white"
+                            : "bg-gray-200"
+                        }`}
+                      >
+                        {sub.assigneeIds.includes(u.id) ? (
+                          <IoClose />
+                        ) : (
+                          <FaPlus />
+                        )}
+                        {u.username}
+                      </button>
+                    ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+          <button
+            type="button"
+            className="bg-gray-200 px-3 py-2 text-sm  rounded-md"
+            onClick={addSubTask}
+            disabled={isLoading}
+          >
+            + Add Subtask
+          </button>
+        </div>
+
+        {/* Submit */}
         <button
-          type="button"
-          onClick={addSubTask}
-          className="px-3 py-1 bg-gray-300 rounded"
+          type="submit"
+          className="text-sm bg-primary text-secondary px-3 py-2 rounded-md font-semibold"
           disabled={isLoading}
         >
-          + Add Subtask
+          {isLoading ? (
+            <BeatLoader color={"#ffffff"} loading={isLoading} size={3} />
+          ) : (
+            "Create Task"
+          )}
         </button>
       </div>
-
-      {/* Submit */}
-      <button
-        onClick={handleSubmit}
-        className="btn-primary btn-md"
-        disabled={isLoading}
-      >
-        {isLoading ? "Craeting Task ..." : "Create Task"}
-      </button>
-    </div>
+    </form>
   );
 };
 
