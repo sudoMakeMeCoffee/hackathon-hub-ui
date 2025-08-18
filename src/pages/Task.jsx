@@ -50,9 +50,9 @@ const Task = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6">
+    <div className="w-full min-h-[calc(100vh-156px)] flex flex-col gap-1 wrapper">
       {/* Main Task */}
-      <div className="bg-white rounded-2xl shadow-lg p-6">
+      <div className="bg-white rounded-md shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 p-5 w-full">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">{task.title}</h1>
           <span
@@ -71,7 +71,7 @@ const Task = () => {
       </div>
 
       {/* Main Task Assignees */}
-      <div className="bg-white rounded-2xl shadow-lg p-6">
+      <div className="bg-white rounded-md shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 p-5 w-full">
         <h2 className="text-lg font-semibold mb-4">Assignees</h2>
         <div className="flex gap-4 flex-wrap">
           {task.taskAssignees?.map((user) => (
@@ -92,7 +92,7 @@ const Task = () => {
       </div>
 
       {/* Subtasks */}
-      <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+      <div className="bg-white rounded-md shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300 p-5 w-full">
         <h2 className="text-lg font-semibold mb-4">Subtasks</h2>
         {task.subTasks?.map((subtask) => (
           <div
