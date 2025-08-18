@@ -1,6 +1,7 @@
 import React from "react";
 import { CgProfile } from "react-icons/cg";
-import { FaListCheck } from "react-icons/fa6";
+import { FaRegPlusSquare } from "react-icons/fa";
+import { FaListCheck, FaRegSquare } from "react-icons/fa6";
 import { GrDashboard } from "react-icons/gr";
 import { HiOutlineUsers } from "react-icons/hi";
 import { MdDashboard, MdOutlineDashboard } from "react-icons/md";
@@ -35,6 +36,18 @@ const DashboardSideNav = () => {
         >
           <FaListCheck className="text-lg" />
           <span>Tasks</span>
+        </Link>
+
+        <Link
+          className={`flex items-center w-full hover:bg-gray-200 p-3 gap-3 rounded-md text-sm transition-all ${
+            isActive("/dashboard/posts/create")
+              ? "font-semibold scale-102 bg-gray-200"
+              : "opacity-70"
+          }`}
+          to="/dashboard/posts/create"
+        >
+          <FaRegPlusSquare className="text-lg" />
+          <span>Create Post</span>
         </Link>
 
         <Link

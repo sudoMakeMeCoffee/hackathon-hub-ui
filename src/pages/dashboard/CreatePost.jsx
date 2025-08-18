@@ -3,7 +3,7 @@ import axios from "axios";
 import { CgClose } from "react-icons/cg";
 import { FaBold, FaItalic, FaUnderline } from "react-icons/fa6";
 import { IoImageOutline } from "react-icons/io5";
-import api from "../api/axios";
+import api from "../../api/axios";
 
 const CreatePost = () => {
   const [text, setText] = useState("");
@@ -69,16 +69,12 @@ const CreatePost = () => {
     setLoading(true);
 
     try {
-      const response = await api.post(
-        "/api/v1/post/create",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true, // include cookies if using session/auth
-        }
-      );
+      const response = await api.post("/api/v1/post/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true, // include cookies if using session/auth
+      });
 
       if (response.data.success) {
         alert("Post created successfully!");
@@ -96,7 +92,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="md:max-w-4xl mx-auto bg-white md:shadow overflow-hidden md:p-4 md:rounded-lg">
+    <div className="min-h-[calc(100vh-156px)] wrapper md:max-w-4xl mx-auto bg-white md:shadow overflow-hidden md:p-4 md:rounded-md">
       {/* Header */}
       <div className="flex items-center justify-between border-b-[0.5px] border-gray-300 p-4 mb-4">
         <CgClose className="cursor-pointer text-lg" />
