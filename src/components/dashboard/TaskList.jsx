@@ -14,8 +14,7 @@ const TaskList = ({ tasks, setShowAddTaskForm }) => {
           to={"add"}
           className="bg-white rounded-md shadow-md border border-gray-200 hover:shadow-xl transition-shadow duration-300 p-5 w-full cursor-pointer group flex items-center justify-center"
         >
-
-            <FaPlus className="text-4xl text-gray-300"/>
+          <FaPlus className="text-4xl text-gray-300" />
         </Link>
       </div>
     </div>

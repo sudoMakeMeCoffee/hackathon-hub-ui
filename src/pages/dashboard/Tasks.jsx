@@ -3,7 +3,7 @@ import api from "../../api/axios";
 import { PiPlus } from "react-icons/pi";
 import { FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import TaskList from "../../components/TaskList";
+import TaskList from "../../components/dashboard/TaskList";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);

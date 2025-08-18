@@ -1,7 +1,6 @@
 // layouts/DashboardLayout.jsx
 import DashboardSideNav from "../components/dashboard/DashboardSideNav";
 import DashboardTopBar from "../components/dashboard/DashboardTopBar";
-import DashboardNav from "../components/DashboardNav";
 import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {

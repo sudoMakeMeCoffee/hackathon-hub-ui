@@ -3,7 +3,7 @@ import { CiCircleCheck, CiClock2 } from "react-icons/ci";
 import { FaRegClock } from "react-icons/fa6";
 import { WiDirectionUpRight } from "react-icons/wi";
 import { Link } from "react-router-dom";
-import { truncateStr } from "../utils/utils";
+import { truncateStr } from "../../utils/utils";
 
 const TaskCard = ({ task }) => {
   // Count completed subtasks
