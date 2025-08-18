@@ -38,7 +38,7 @@ const Users = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen wrapper">
+    <div className="w-full min-h-[calc(100vh-156px)] wrapper">
       <div className="flex items-center justify-between ">
         <h1 className="text-xl font-bold">User Management</h1>
         <Link

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../../api/axios";
 import { BeatLoader } from "react-spinners";
 import { FaPlus, FaTrash } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
@@ -182,7 +182,7 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
                 className="absolute top-[-10px] right-[-10px] text-gray-500 hover:text-red-500"
                 disabled={isLoading}
               >
-                <IoIosCloseCircle className="text-3xl"/>
+                <IoIosCloseCircle className="text-3xl" />
               </button>
 
               <input
@@ -236,7 +236,11 @@ const AddTaskForm = ({ setShowAddTaskForm }) => {
                             : "bg-gray-200"
                         }`}
                       >
-                        {sub.assigneeIds.includes(u.id) ? <IoClose /> : <FaPlus />}
+                        {sub.assigneeIds.includes(u.id) ? (
+                          <IoClose />
+                        ) : (
+                          <FaPlus />
+                        )}
                         {u.username}
                       </button>
                     ))}

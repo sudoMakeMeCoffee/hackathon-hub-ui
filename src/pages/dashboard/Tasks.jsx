@@ -8,7 +8,7 @@ import TaskList from "../../components/TaskList";
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchTasks = async () => {
       try {
         const res = await api.get("/api/v1/task", {
@@ -23,7 +23,7 @@ const Tasks = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen wrapper">
+    <div className="w-full min-h-[calc(100vh-156px)] wrapper">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-xl font-bold">Tasks Management</h1>
         <Link
@@ -35,7 +35,7 @@ const Tasks = () => {
         </Link>
       </div>
 
-      <TaskList tasks={tasks}/>
+      <TaskList tasks={tasks} />
     </div>
   );
 };

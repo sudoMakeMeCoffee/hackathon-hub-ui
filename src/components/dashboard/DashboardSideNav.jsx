@@ -1,4 +1,5 @@
 import React from "react";
+import { CgProfile } from "react-icons/cg";
 import { FaListCheck } from "react-icons/fa6";
 import { GrDashboard } from "react-icons/gr";
 import { HiOutlineUsers } from "react-icons/hi";
@@ -14,32 +15,50 @@ const DashboardSideNav = () => {
       <div className="p-3 flex flex-col gap-3">
         <Link
           className={`flex items-center w-full hover:bg-gray-200 p-3 gap-3 rounded-md text-sm transition-all ${
-            isActive("/dashboard") ? "font-semibold scale-102 bg-gray-200" : "opacity-70"
+            isActive("/dashboard")
+              ? "font-semibold scale-102 bg-gray-200"
+              : "opacity-70"
           }`}
           to="/dashboard"
         >
-          <MdOutlineDashboard className="text-lg"/>
+          <MdOutlineDashboard className="text-lg" />
           <span>Dashboard</span>
         </Link>
 
         <Link
           className={`flex items-center w-full hover:bg-gray-200 p-3 gap-3 rounded-md text-sm transition-all ${
-            isActive("/dashboard/tasks") ? "font-semibold scale-102 bg-gray-200" : "opacity-70"
+            isActive("/dashboard/tasks")
+              ? "font-semibold scale-102 bg-gray-200"
+              : "opacity-70"
           }`}
           to="/dashboard/tasks"
         >
-          <FaListCheck className="text-lg"/>
+          <FaListCheck className="text-lg" />
           <span>Tasks</span>
         </Link>
 
-         <Link
+        <Link
           className={`flex items-center w-full hover:bg-gray-200 p-3 gap-3 rounded-md text-sm transition-all ${
-            isActive("/dashboard/users") ||  isActive("/dashboard/users/add") ? "font-semibold scale-102 bg-gray-200" : "opacity-70"
+            isActive("/dashboard/users") || isActive("/dashboard/users/add")
+              ? "font-semibold scale-102 bg-gray-200"
+              : "opacity-70"
           }`}
           to="/dashboard/users"
         >
-          <HiOutlineUsers className="text-lg"/>
+          <HiOutlineUsers className="text-lg" />
           <span>Users</span>
+        </Link>
+
+        <Link
+          className={`flex items-center w-full hover:bg-gray-200 p-3 gap-3 rounded-md text-sm transition-all ${
+            isActive("/dashboard/profile")
+              ? "font-semibold scale-102 bg-gray-200"
+              : "opacity-70"
+          }`}
+          to="/dashboard/profile"
+        >
+          <CgProfile className="text-lg" />
+          <span>Profile</span>
         </Link>
       </div>
     </div>

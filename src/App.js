@@ -11,7 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import axios from "axios";
 import useAuthStore from "./store/AuthStore";
 import { useEffect } from "react";
-import Profile from "./pages/Profile";
+import Profile from "./pages/dashboard/Profile";
 import api from "./api/axios";
 import AddUser from "./pages/dashboard/AddUser";
 import Loader from "./components/Loader";
