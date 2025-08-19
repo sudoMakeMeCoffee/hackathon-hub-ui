@@ -14,7 +14,7 @@ const DashboardLayout = () => {
       <DashboardSideNav />
 
       {/* Main content */}
-      <div className="bg-secondary py-4 mt-[70px] md:ml-[250px] pb-[100px] md:py-4">
+      <div className="bg-secondary wrapper min-h-screen  pt-[80px]  md:ml-[250px] pb-[100px]">
         <Outlet />
       </div>
 

@@ -24,7 +24,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-[calc(100vh-156px)] wrapper">
+    <div className="w-full">
       <div className="flex items-center justify-between ">
         <h1 className="text-xl font-bold">Dashboard Overview</h1>
       </div>

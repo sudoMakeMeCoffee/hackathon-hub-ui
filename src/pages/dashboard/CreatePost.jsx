@@ -92,7 +92,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-156px)] wrapper md:max-w-4xl mx-auto bg-white md:shadow overflow-hidden md:p-4 md:rounded-md">
+    <div className="md:max-w-4xl mx-auto bg-white md:shadow overflow-hidden md:p-4 md:rounded-md">
       {/* Header */}
       <div className="flex items-center justify-between border-b-[0.5px] border-gray-300 p-4 mb-4">
         <CgClose className="cursor-pointer text-lg" />

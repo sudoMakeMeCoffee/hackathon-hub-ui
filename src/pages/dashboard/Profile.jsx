@@ -59,7 +59,7 @@ const Profile = () => {
 
   return (
     <div>
-      <div className="w-full min-h-[calc(100vh-86px)] wrapper">
+      <div className="w-full">
         <div className="flex items-center gap-2">
           <div className="w-[50px] h-[50px]">
             <img
