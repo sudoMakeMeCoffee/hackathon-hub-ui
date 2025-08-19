@@ -35,3 +35,25 @@ export function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
+
+ export function timeAgo(dateString) {
+  const now = new Date();
+  const past = new Date(dateString);
+  const diff = (now - past) / 1000; // seconds difference
+
+  if (diff < 60) {
+    const secs = Math.floor(diff);
+    return secs <= 1 ? "just now" : `${secs} seconds ago`;
+  } else if (diff < 3600) {
+    const mins = Math.floor(diff / 60);
+    return mins === 1 ? "1 min ago" : `${mins} mins ago`;
+  } else if (diff < 86400) {
+    const hours = Math.floor(diff / 3600);
+    return hours === 1 ? "1 hr ago" : `${hours} hrs ago`;
+  } else if (diff < 2592000) { // 30 days
+    const days = Math.floor(diff / 86400);
+    return days === 1 ? "1 day ago" : `${days} days ago`;
+  } else {
+    return past.toLocaleDateString(); // fallback to date
+  }
+}
