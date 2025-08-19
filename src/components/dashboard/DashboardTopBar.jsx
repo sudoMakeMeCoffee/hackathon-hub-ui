@@ -1,8 +1,10 @@
 import React from "react";
 import logo from "../../assets/logo-dark.svg";
 import { BiSearch } from "react-icons/bi";
+import useAuthStore from "../../store/AuthStore";
 
 const DashboardTopBar = () => {
+  const { user } = useAuthStore();
   return (
     <div className="fixed top-0 left-0 right-0 bg-secondary w-full h-[70px]  flex items-center border-b shadow-sm border-gray-200 z-40">
       <div className="wrapper w-full flex items-center justify-between">
@@ -15,14 +17,17 @@ const DashboardTopBar = () => {
             className="border border-gray-200 text-sm rounded-md px-3 py-2 focus:outline-none hidden md:block"
           />
 
-          <BiSearch className="text-xl block md:hidden cursor-pointer"/>
+          <BiSearch className="text-xl block md:hidden cursor-pointer" />
 
           <button className="text-sm bg-gray-200 px-3 py-2 rounded-md hidden md:block">
             Logout
           </button>
 
           <button className="w-[35px] h-[35px]">
-            <img src="https://avatar.iran.liara.run/username?username=sithija" className="w-full h-full"/>
+            <img
+              src={`https://avatar.iran.liara.run/username?username=${user.username}`}
+              className="w-full h-full"
+            />
           </button>
         </div>
       </div>

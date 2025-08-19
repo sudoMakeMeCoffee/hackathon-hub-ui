@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { PiPlus } from "react-icons/pi";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaTrash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import useAuthStore from "../../store/AuthStore";
+import { MdDeleteOutline } from "react-icons/md";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -82,6 +84,35 @@ const Users = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* mobile view */}
+      <div className="flex flex-col gap-2 md:hidden">
+        {users.map((user) => (
+          <div className="flex items-center justify-between bg-white rounded-md shadow-lg border border-gray-200  p-5 w-full">
+            <div className="flex items-center gap-2">
+              <div className="w-[40px] h-[40px]">
+                <img
+                  src={`https://avatar.iran.liara.run/username?username=${user.username}`}
+                  className="w-full h-full"
+                />
+              </div>
+
+              <div className="text-sm">
+                <h1 className="font-bold">{user.username}</h1>
+                <span className="text-xs">
+                  {user.email}{" "}
+                  <span className="text-blue-500">{user.role}</span>
+                </span>
+              </div>
+            </div>
+
+            <MdDeleteOutline
+              className="text-red-400 hover:text-red-500 text-xl cursor-pointer"
+              onClick={() => deleteUser(user.id)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
