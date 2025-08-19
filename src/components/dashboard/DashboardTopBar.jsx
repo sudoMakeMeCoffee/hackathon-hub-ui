@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/logo-dark.png";
+import logo from "../../assets/logo-dark.svg";
 
 const DashboardTopBar = () => {
   return (
