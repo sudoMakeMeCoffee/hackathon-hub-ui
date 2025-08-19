@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import api from "../../api/axios";
 import { PiPlus } from "react-icons/pi";
 import { FaPlus, FaTrash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import useAuthStore from "../../store/AuthStore";
 import { MdDeleteOutline } from "react-icons/md";
+import ConfirmPopup from "../../components/ConfirmPopup";
 
 const Users = () => {
+  const [showConfirm, setShowConfirm] = useState(false);
   const [users, setUsers] = useState([]);
 
   const getAllUsers = () => {
@@ -24,15 +26,17 @@ const Users = () => {
   };
 
   const deleteUser = (userId) => {
-    api
-      .delete(`/api/v1/user/${userId}`, { withCredentials: true })
-      .then((res) => {
-        console.log("User deleted successfully:", res.data);
-        setUsers(users.filter((user) => user.id !== userId));
-      })
-      .catch((err) => {
-        console.error("Error deleting user:", err);
-      });
+    if (window.confirm("You want to delete this user ?")) {
+      api
+        .delete(`/api/v1/user/${userId}`, { withCredentials: true })
+        .then((res) => {
+          console.log("User deleted successfully:", res.data);
+          setUsers(users.filter((user) => user.id !== userId));
+        })
+        .catch((err) => {
+          console.error("Error deleting user:", err);
+        });
+    }
   };
 
   useEffect(() => {
