@@ -14,6 +14,7 @@ import api from "./api/axios";
 import AddUser from "./pages/dashboard/AddUser";
 import AddTask from "./pages/dashboard/AddTask";
 import CreatePost from "./pages/dashboard/CreatePost";
+import PublicLayout from "./layouts/PublicLayout";
 
 function App() {
   const { isAuthenticated, setIsAuthenticated, user, setUser, setAuthLoading } =
@@ -38,8 +39,10 @@ function App() {
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
