@@ -1,5 +1,5 @@
 import { BiDotsHorizontal } from "react-icons/bi";
-
+import {timeAgo} from "../utils/utils"
 const Post = ({ post }) => {
   return (
     <div>
@@ -7,22 +7,22 @@ const Post = ({ post }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCiQSSoCfHsEuLIcJA7R8TuWfJFl02NABEPQ&s"
+              src={`https://avatar.iran.liara.run/username?username=${post.createdBy.username}`}
               alt=""
               className="w-[45px] h-[45px] rounded-full"
             />
             <div className="text-sm">
               <div className="flex gap-2 ">
                 <span className="font-bold">{post.createdBy.username}</span>
-                <span className="text-gray-600">• 9h</span>
+                <span className="text-gray-600">• {timeAgo(post.createdAt)}</span>
               </div>
-              <span className="text-sm text-gray-600">Presidant</span>
+              <span className="text-sm text-gray-600">{post.createdBy.position}</span>
             </div>
           </div>
           <BiDotsHorizontal className="text-lg cursor-pointer" />
         </div>
 
-        <div className="w-full   rounded-md">
+        <div className="w-full rounded-md">
           <div>
             <img src={`${process.env.REACT_APP_API_URL}/uploads/${post.imagePath}`} alt="" className="w-full rounded-md" />
           </div>

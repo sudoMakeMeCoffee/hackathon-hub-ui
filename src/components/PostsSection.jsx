@@ -22,7 +22,7 @@ const PostsSection = () => {
   }, []);
 
   return (
-    <div className="w-full p-4 h-max min-h-screen flex flex-col items-center">
+    <div className="w-full p-4 flex flex-col items-center">
       {posts.map((post) => (
         <Post post={post} />
       ))}
