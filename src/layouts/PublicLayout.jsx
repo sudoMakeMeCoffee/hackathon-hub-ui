@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import MobileTopBar from "../components/MobileTopBar";
 import SideBarMenu from "../components/SideBarMenu";
 import MobileBottomNav from "../components/MobileBottomNav";
 
 const PublicLayout = () => {
+    useEffect(() => {
+        document.body.style.backgroundColor = "#000"
+    }, [])
   return (
     <div className="text-secondary">
       <MobileTopBar />
