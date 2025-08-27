@@ -1,22 +1,14 @@
-import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import MobileTopBar from "../components/MobileTopBar";
-import SideBarMenu from "../components/SideBarMenu";
-import MobileBottomNav from "../components/MobileBottomNav";
+import Navbar from "../components/public/Navbar";
+import "../Public.css";
 
 const PublicLayout = () => {
-    useEffect(() => {
-        document.body.style.backgroundColor = "#000"
-    }, [])
   return (
-    <div className="text-secondary">
-      <MobileTopBar />
-      <SideBarMenu />
-      {/* Main content */}
-      <div className="bg-primary min-h-screen mt-[70px] md:mt-0">
+    <div className="bg-primary text-secondary">
+      <Navbar />
+      <div>
         <Outlet />
       </div>
-      <MobileBottomNav />
     </div>
   );
 };
