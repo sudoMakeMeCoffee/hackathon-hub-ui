@@ -1,11 +1,17 @@
 import Hero from "../components/public/Hero";
-import Navbar from "../components/public/Navbar";
-import PostsSection from "../components/PostsSection";
+import Team from "../components/public/Team";
+import Events from "../components/public/Events";
+import Testimonials from "../components/public/Testimonials";
+import AlgoXplore from "../components/public/Algoxplore";
 
 const Home = () => {
   return (
     <div className="">
       <Hero />
+      <Team />
+      <Events />
+      <Testimonials />
+      <AlgoXplore />
     </div>
   );
 };
