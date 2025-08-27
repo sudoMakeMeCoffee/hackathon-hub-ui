@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo-light.svg";
 const Navbar = () => {
   return (
-    <div className="w-full h-[70px] fixed top-0 right-0 flex items-center  justify-between wrapper">
-      <div>
-        <img src={logo} alt="" className="w-[120px]" />
+    <div className="w-full sticky top-4 flex items-center justify-between z-50">
+      <div className="text-white text-5xl text-center font-bold">
+        Hackathon Hub
       </div>
-
       <div>
         <Link to="#team" className="text-white text-3xl text-center m-4">
           Team
