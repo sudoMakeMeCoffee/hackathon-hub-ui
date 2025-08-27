@@ -4,7 +4,7 @@ import "../Public.css";
 
 const PublicLayout = () => {
   return (
-    <div className="bg-primary text-secondary">
+    <div className="">
       <Navbar />
       <div>
         <Outlet />
